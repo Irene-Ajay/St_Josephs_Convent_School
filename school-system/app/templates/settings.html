@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-xl font-semibold text-brand-900">Settings</h1>
+{% if backed_up %}
+<div class="mt-3 bg-green-50 border border-green-200 text-green-900 rounded px-4 py-2.5 text-sm">Backup created.</div>
+{% endif %}
+{% if saved %}
+<div class="mt-3 bg-green-50 border border-green-200 text-green-900 rounded px-4 py-2.5 text-sm">Settings saved.</div>
+{% endif %}
+
+<form method="post" class="mt-4 space-y-5">
+  <section class="bg-white rounded-lg shadow-sm p-5">
+    <h2 class="font-medium">School details</h2>
+    <div class="mt-3 grid sm:grid-cols-2 gap-4 text-sm">
+      <div><label class="block">School name</label>
+        <input name="name" value="{{ config.get('school','name') }}" class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+      <div><label class="block">Short name (used in messages)</label>
+        <input name="short_name" value="{{ config.get('school','short_name') }}" class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+      <div><label class="block">Office phone</label>
+        <input name="phone" value="{{ config.get('school','phone') }}" class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+      <div><label class="block">Office email</label>
+        <input name="email" value="{{ config.get('school','email') }}" class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+    </div>
+  </section>
+
+  <section class="bg-white rounded-lg shadow-sm p-5">
+    <h2 class="font-medium">Attendance</h2>
+    <div class="mt-3 text-sm max-w-xs">
+      <label class="block">Minimum attendance required (%)</label>
+      <input name="threshold_percent" type="number" min="0" max="100"
+             value="{{ config.get('attendance','threshold_percent') }}"
+             class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+    </div>
+  </section>
+
+  <section class="bg-white rounded-lg shadow-sm p-5">
+    <h2 class="font-medium">Email for parent notifications</h2>
+    <p class="mt-1 text-xs text-slate-600">
+      Use a Gmail account with an <b>App Password</b> (not the normal password).
+      This is free. Leaving this off is fine &mdash; staff can still send WhatsApp messages
+      from the Parent messages page.
+    </p>
+    <div class="mt-3 grid sm:grid-cols-2 gap-4 text-sm">
+      <label class="flex items-center gap-2 sm:col-span-2">
+        <input type="checkbox" name="enabled" {% if config.get_bool('email','enabled') %}checked{% endif %}>
+        <span>Enable automatic emails</span>
+      </label>
+      <div><label class="block">SMTP host</label>
+        <input name="smtp_host" value="{{ config.get('email','smtp_host') }}" class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+      <div><label class="block">Port</label>
+        <input name="smtp_port" value="{{ config.get('email','smtp_port') }}" class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+      <div><label class="block">Email address</label>
+        <input name="username" value="{{ config.get('email','username') }}" class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+      <div><label class="block">App password</label>
+        <input name="password" type="password" placeholder="leave blank to keep current"
+               class="mt-1 w-full border border-slate-300 rounded px-3 py-2"></div>
+    </div>
+  </section>
+
+  <section class="bg-white rounded-lg shadow-sm p-5">
+    <h2 class="font-medium">Backups</h2>
+    <p class="mt-1 text-xs text-slate-600">
+      The system backs itself up automatically &mdash; once when it starts each
+      morning, and again every afternoon. You do not need to do anything.
+    </p>
+
+    {% if backup_info.last_run %}
+    <div class="mt-3 bg-green-50 border border-green-200 rounded px-3 py-2.5 text-sm text-green-900">
+      <b>Last backup:</b> {{ backup_info.last_run }}<br>
+      {{ backup_info.count }} backup(s) kept &middot; {{ backup_info.total_size_kb }} KB total
+      {% if backup_info.oldest %}<br>oldest: {{ backup_info.oldest }}{% endif %}
+    </div>
+    {% else %}
+    <div class="mt-3 bg-amber-50 border border-amber-200 rounded px-3 py-2.5 text-sm text-amber-900">
+      No backup has run yet.
+    </div>
+    {% endif %}
+
+    <p class="mt-3 text-xs text-slate-500">
+      Saved in: <span class="font-mono">{{ backup_info.folder }}</span>
+    </p>
+
+    <div class="mt-4 text-sm">
+      <label class="block font-medium">Second copy location (strongly recommended)</label>
+      <input name="second_location" value="{{ backup_info.second_location }}"
+             placeholder="E:\SchoolBackups"
+             class="mt-1 w-full border border-slate-300 rounded px-3 py-2 font-mono text-xs">
+      <p class="text-xs text-slate-500 mt-1">
+        A backup on the same hard disk protects against mistakes, not against the
+        disk failing. Point this at a pen drive, a network folder, or the
+        school&rsquo;s own Google Drive / OneDrive folder. Leave blank to skip.
+      </p>
+    </div>
+  </section>
+
+  <button class="px-5 py-2.5 bg-brand-800 text-white rounded font-medium">Save settings</button>
+</form>
+
+<form method="post" action="/settings/backup-now" class="mt-3">
+  <button class="px-5 py-2.5 border border-slate-300 rounded text-sm">Back up now</button>
+  <span class="ml-2 text-xs text-slate-500">Useful before a holiday or a change.</span>
+</form>
+{% endblock %}

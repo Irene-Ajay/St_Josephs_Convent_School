@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="flex items-center justify-between flex-wrap gap-2">
+  <div>
+    <h1 class="text-xl font-semibold text-brand-900">Staff accounts</h1>
+    <p class="text-sm text-slate-600">Only staff listed here can log in.</p>
+  </div>
+  <a href="/staff/new" class="px-4 py-2 bg-brand-800 text-white rounded text-sm no-print">
+    Add staff member
+  </a>
+</div>
+
+{% if new_password %}
+<!-- Shown exactly once. We store a hash, not the password, so it can never
+     be looked up again — only reset. -->
+<div class="mt-4 bg-green-50 border-2 border-green-400 rounded-lg p-5">
+  <h2 class="font-semibold text-green-900">Account ready — write this down now</h2>
+  <p class="text-sm text-green-800 mt-1">
+    This password is shown only once and cannot be viewed again.
+    If it is lost, use <b>Reset password</b> to create a new one.
+  </p>
+  <div class="mt-3 bg-white rounded border border-green-300 p-4 font-mono text-lg">
+    <div>Username: <b>{{ new_username }}</b></div>
+    <div>Password: <b>{{ new_password }}</b></div>
+  </div>
+  <p class="text-sm text-green-800 mt-3">
+    Give these to the staff member. They will be asked to choose their own
+    password the first time they sign in.
+  </p>
+</div>
+{% endif %}
+
+<div class="mt-4 bg-white rounded-lg shadow-sm overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead class="bg-slate-50 text-left">
+      <tr>
+        <th class="p-3">Name</th>
+        <th class="p-3">Username</th>
+        <th class="p-3">Role</th>
+        <th class="p-3">Classes</th>
+        <th class="p-3">Last signed in</th>
+        <th class="p-3 no-print">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      {% for member in staff %}
+      <tr class="{% if not member.is_active %}opacity-50{% endif %}">
+        <td class="p-3">
+          <span class="font-medium">{{ member.full_name }}</span>
+          {% if not member.is_active %}
+            <span class="ml-1 text-xs bg-slate-200 px-2 py-0.5 rounded">Inactive</span>
+          {% endif %}
+          {% if member.must_change_password %}
+            <div class="text-xs text-amber-700">Has not set their own password yet</div>
+          {% endif %}
+        </td>
+        <td class="p-3 font-mono text-xs">{{ member.username }}</td>
+        <td class="p-3">
+          <span class="px-2 py-0.5 rounded text-xs
+            {% if member.is_admin %}bg-brand-100 text-brand-800{% else %}bg-slate-100 text-slate-700{% endif %}">
+            {{ 'Office / Admin' if member.is_admin else 'Teacher' }}
+          </span>
+        </td>
+        <td class="p-3 text-xs">
+          {{ sections_by_teacher.get(member.id, []) | join(', ') or '—' }}
+        </td>
+        <td class="p-3 text-xs text-slate-500">
+          {{ member.last_login.strftime('%d %b %Y') if member.last_login else 'Never' }}
+        </td>
+        <td class="p-3 no-print">
+          <div class="flex gap-1">
+            <form method="post" action="/staff/{{ member.id }}/reset-password"
+                  onsubmit="return confirm('Create a new password for {{ member.full_name }}?')">
+              <button class="px-2 py-1 border border-slate-300 rounded text-xs">
+                Reset password
+              </button>
+            </form>
+            {% if member.id != user.id %}
+            <form method="post" action="/staff/{{ member.id }}/toggle-active">
+              <button class="px-2 py-1 border border-slate-300 rounded text-xs">
+                {{ 'Activate' if not member.is_active else 'Deactivate' }}
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="mt-3 text-xs text-slate-500">
+  Staff who leave the school are <b>deactivated</b>, never deleted — their name
+  must stay attached to the attendance they marked.
+</p>
+{% endblock %}

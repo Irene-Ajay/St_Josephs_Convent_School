@@ -1,0 +1,24 @@
+# The school's live data — never commit this
+school-system/data/*.db
+school-system/data/*.db-wal
+school-system/data/*.db-shm
+school-system/data/settings.ini
+school-system/data/FIRST_LOGIN.txt
+school-system/data/backups/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# ML artifacts
+ml_artifacts/
+*.joblib
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

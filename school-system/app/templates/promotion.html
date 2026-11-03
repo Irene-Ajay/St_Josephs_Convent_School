@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-xl font-semibold text-brand-900">End-of-year promotion</h1>
+<p class="text-sm text-slate-600">
+  Move students into next year's classes. Last year's records are never
+  changed &mdash; a new record is created for the new year.
+</p>
+
+{% if done %}
+<div class="mt-3 bg-green-50 border border-green-200 text-green-900 rounded px-4 py-2.5 text-sm">
+  Done: {{ done.replace('+', ' ') }}.
+</div>
+{% endif %}
+
+{% if not to_year %}
+<div class="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-900">
+  There is no next year to promote into.
+  <a href="/years" class="underline font-medium">Create the next academic year first.</a>
+</div>
+{% else %}
+
+<div class="mt-4 bg-white rounded-lg shadow-sm p-4 text-sm">
+  Promoting from <b>{{ from_year.name }}</b> &rarr; <b>{{ to_year.name }}</b>
+</div>
+
+<form method="get" class="mt-4 no-print">
+  <select name="section_id" onchange="this.form.submit()"
+          class="border border-slate-300 rounded px-3 py-2 text-sm">
+    <option value="">Choose a class to promote…</option>
+    {% for s in sections %}
+      <option value="{{ s.id }}" {% if section_id == s.id %}selected{% endif %}>{{ s.label }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+{% if section_id and students %}
+<form method="post" action="/promotion/run" class="mt-4">
+  <input type="hidden" name="from_year_id" value="{{ from_year.id }}">
+  <input type="hidden" name="to_year_id" value="{{ to_year.id }}">
+
+  <div class="bg-white rounded-lg shadow-sm p-4 flex flex-wrap items-center gap-3 no-print">
+    <span class="text-sm">
+      {{ students|length }} student(s) in {{ selected_section.label }}
+    </span>
+    {% if suggested %}
+    <button type="button" onclick="setAll('{{ suggested.id }}')"
+            class="text-xs px-3 py-1.5 border border-slate-300 rounded">
+      Move all to {{ suggested.label }}
+    </button>
+    {% endif %}
+    <button type="button" onclick="setAll('GRADUATE')"
+            class="text-xs px-3 py-1.5 border border-slate-300 rounded">
+      Mark all as graduated
+    </button>
+    <button class="ml-auto bg-brand-800 text-white px-5 py-2.5 rounded font-medium">
+      Confirm promotion
+    </button>
+  </div>
+
+  <ul class="mt-3 bg-white rounded-lg shadow-sm divide-y divide-slate-100">
+    {% for s in students %}
+    <li class="p-3 flex items-center gap-3 flex-wrap">
+      <span class="flex-1 min-w-[10rem] text-sm font-medium">
+        {{ s.full_name }}
+        <span class="text-xs text-slate-500">{{ s.admission_number }}</span>
+      </span>
+      <select name="dest_{{ s.id }}" class="dest border border-slate-300 rounded px-2 py-1.5 text-sm min-w-[13rem]">
+        {% for sec in all_sections %}
+          <option value="{{ sec.id }}"
+            {% if suggested and sec.id == suggested.id %}selected{% endif %}>
+            Move to {{ sec.label }}
+          </option>
+        {% endfor %}
+        <option value="SKIP">Repeat the year (leave as is)</option>
+        <option value="GRADUATE">Graduated / left the school</option>
+      </select>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="mt-4 no-print">
+    <button class="w-full bg-brand-800 text-white px-5 py-3 rounded font-medium">
+      Confirm promotion
+    </button>
+  </div>
+</form>
+
+<script>
+  function setAll(value) {
+    document.querySelectorAll('select.dest').forEach(function (el) { el.value = value; });
+  }
+</script>
+
+{% elif section_id %}
+<div class="mt-4 bg-white rounded-lg shadow-sm p-8 text-center text-slate-600">
+  No students enrolled in that class for {{ from_year.name }}.
+</div>
+{% endif %}
+
+{% endif %}
+{% endblock %}

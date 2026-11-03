@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-xl font-semibold text-brand-900">Parent messages</h1>
+<p class="text-sm text-slate-600">{{ day.strftime('%A, %d %B %Y') }}</p>
+
+{% if request.query_params.get('sent') %}
+<div class="mt-3 bg-green-50 border border-green-200 text-green-900 rounded px-4 py-2.5 text-sm">
+  {{ request.query_params.get('sent') }} email(s) sent.
+  {% if request.query_params.get('failed') != '0' %}
+    {{ request.query_params.get('failed') }} failed.
+  {% endif %}
+</div>
+{% endif %}
+
+{% if not pending %}
+  <div class="mt-6 bg-white rounded-lg shadow-sm p-8 text-center text-slate-600">
+    No pending messages. Either nobody was absent, or all parents have been contacted.
+  </div>
+{% else %}
+
+<!-- WhatsApp / phone is the primary path: it works today, on the school's
+     existing phone, at no cost. Email is automatic once configured.
+     Automated SMS requires DLT registration by the school - see SETUP.md. -->
+<section class="mt-5 bg-white rounded-lg shadow-sm p-4">
+  <div class="flex items-center justify-between flex-wrap gap-2">
+    <h2 class="font-medium">{{ pending|length }} parent(s) to contact</h2>
+    {% if email_ready %}
+    <form method="post" action="/messages/send-email">
+      <input type="hidden" name="day" value="{{ day }}">
+      <button class="px-4 py-2 bg-brand-800 text-white rounded text-sm">
+        Send all by email
+      </button>
+    </form>
+    {% else %}
+    <span class="text-xs text-amber-700 bg-amber-50 px-3 py-1.5 rounded">
+      Email not configured &mdash; use the copy buttons below.
+      {% if user.is_admin %}<a href="/settings" class="underline">Set up email</a>{% endif %}
+    </span>
+    {% endif %}
+  </div>
+
+  <ul class="mt-4 divide-y divide-slate-100">
+    {% for item in pending %}
+    <li class="py-3">
+      <div class="flex justify-between items-start gap-3 flex-wrap">
+        <div class="flex-1 min-w-[12rem]">
+          <div class="font-medium text-sm">
+            {{ item.student.full_name }}
+            {% if item.consecutive_absences >= 3 %}
+              <span class="ml-1 px-2 py-0.5 rounded bg-red-100 text-red-800 text-xs">
+                {{ item.consecutive_absences }} days in a row
+              </span>
+            {% endif %}
+          </div>
+          <div class="text-xs text-slate-500">
+            {{ item.student.section.label if item.student.section else '' }}
+            {% if item.phone %} &middot; {{ item.phone }}{% endif %}
+          </div>
+          <p class="mt-2 text-sm bg-slate-50 rounded p-2" id="msg-{{ item.student.id }}">
+            {{ item.text }}
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-1.5 no-print">
+          {% if item.phone %}
+          <a target="_blank" rel="noopener"
+             href="https://wa.me/91{{ item.phone[-10:] }}?text={{ item.text | urlencode }}"
+             class="px-3 py-2 bg-green-600 text-white rounded text-xs text-center whitespace-nowrap">
+            Send WhatsApp
+          </a>
+          <a href="tel:{{ item.phone }}"
+             class="px-3 py-2 border border-slate-300 rounded text-xs text-center">Call</a>
+          {% endif %}
+          <form method="post" action="/messages/mark-contacted">
+            <input type="hidden" name="day" value="{{ day }}">
+            <input type="hidden" name="student_id" value="{{ item.student.id }}">
+            <input type="hidden" name="message" value="{{ item.text }}">
+            <button class="w-full px-3 py-2 border border-slate-300 rounded text-xs">
+              Mark as contacted
+            </button>
+          </form>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if sent %}
+<section class="mt-6 bg-white rounded-lg shadow-sm p-4">
+  <h2 class="font-medium">Already contacted today</h2>
+  <ul class="mt-3 divide-y divide-slate-100 text-sm">
+    {% for row in sent %}
+    <li class="py-2 flex justify-between gap-3">
+      <span>{{ row.student.full_name }}</span>
+      <span class="text-xs {% if row.status == 'SENT' %}text-green-700{% else %}text-red-700{% endif %}">
+        {{ row.channel.replace('_', ' ').title() }} &middot; {{ row.status }}
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% endblock %}

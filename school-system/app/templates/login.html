@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center">
+  <div class="w-full max-w-sm bg-white rounded-lg shadow p-8">
+    <h1 class="text-xl font-semibold text-brand-900">{{ school_name }}</h1>
+    <p class="text-sm text-slate-600 mt-1">Please sign in to continue.</p>
+
+    <form method="post" action="/login" class="mt-6 space-y-4">
+      <input type="hidden" name="next" value="{{ next }}">
+      <div>
+        <label for="username" class="block text-sm font-medium">Username</label>
+        <input id="username" name="username" required autofocus autocomplete="username"
+               class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium">Password</label>
+        <input id="password" name="password" type="password" required autocomplete="current-password"
+               class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+      </div>
+      {% if error %}
+        <p class="text-sm text-red-700 bg-red-50 rounded px-3 py-2">{{ error }}</p>
+      {% endif %}
+      <button class="w-full bg-brand-800 text-white rounded py-2.5 font-medium hover:bg-brand-900">
+        Sign in
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

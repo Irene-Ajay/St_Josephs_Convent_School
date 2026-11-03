@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex items-center justify-between flex-wrap gap-2">
+  <h1 class="text-xl font-semibold text-brand-900">Students</h1>
+  {% if user.is_admin %}
+  <div class="flex gap-2 no-print">
+    <a href="/students/new" class="px-3 py-2 bg-brand-800 text-white rounded text-sm">Add student</a>
+    <a href="/students/import" class="px-3 py-2 border border-slate-300 rounded text-sm">Import from Excel</a>
+  </div>
+  {% endif %}
+</div>
+
+<form method="get" class="mt-4 flex gap-2 flex-wrap no-print">
+  <input name="q" value="{{ q }}" placeholder="Search name, admission no, phone"
+         class="flex-1 min-w-[12rem] border border-slate-300 rounded px-3 py-2 text-sm">
+  <select name="section_id" class="border border-slate-300 rounded px-3 py-2 text-sm">
+    <option value="">All classes</option>
+    {% for s in sections %}
+      <option value="{{ s.id }}" {% if section_id == s.id %}selected{% endif %}>{{ s.label }}</option>
+    {% endfor %}
+  </select>
+  <button class="px-4 py-2 bg-brand-800 text-white rounded text-sm">Search</button>
+</form>
+
+{% if not students %}
+<div class="mt-6 bg-white rounded-lg shadow-sm p-8 text-center text-slate-600">
+  No students found.
+  {% if user.is_admin %}
+    <a href="/students/import" class="text-brand-700 underline">Import your student list</a> to get started.
+  {% endif %}
+</div>
+{% else %}
+<div class="mt-4 bg-white rounded-lg shadow-sm overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead class="bg-slate-50 text-left">
+      <tr>
+        <th class="p-3">Roll</th><th class="p-3">Name</th>
+        <th class="p-3">Class</th><th class="p-3">Guardian</th><th class="p-3">Phone</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      {% for s in students %}
+      <tr class="hover:bg-slate-50">
+        <td class="p-3 text-slate-500">{{ s.roll_number or '-' }}</td>
+        <td class="p-3">
+          <a href="/students/{{ s.id }}" class="font-medium hover:underline">{{ s.full_name }}</a>
+          <div class="text-xs text-slate-500">{{ s.admission_number }}</div>
+        </td>
+        <td class="p-3">{{ s.section.label if s.section else '-' }}</td>
+        <td class="p-3">{{ s.father_name or s.mother_name or '-' }}</td>
+        <td class="p-3">{{ s.contact_number or '-' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="mt-2 text-xs text-slate-500">{{ students|length }} student(s) shown.</p>
+{% endif %}
+{% endblock %}

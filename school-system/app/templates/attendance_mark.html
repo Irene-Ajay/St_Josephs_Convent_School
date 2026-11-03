@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Attendance - {{ section.label }}{% endblock %}
+{% block content %}
+
+<div class="flex items-start justify-between flex-wrap gap-2">
+  <div>
+    <h1 class="text-xl font-semibold text-brand-900">{{ section.label }}</h1>
+    <p class="text-sm text-slate-600">{{ day.strftime('%A, %d %B %Y') }}</p>
+  </div>
+  <form method="get" class="no-print">
+    <input type="date" name="day" value="{{ day }}" onchange="this.form.submit()"
+           class="border border-slate-300 rounded px-2 py-1.5 text-sm">
+  </form>
+</div>
+
+{% if request.query_params.get('saved') %}
+<div class="mt-3 bg-green-50 border border-green-200 text-green-900 rounded px-4 py-2.5 text-sm">
+  Saved. {{ request.query_params.get('saved') }} students recorded.
+  <a href="/messages?day={{ day }}" class="underline font-medium">Notify parents of absentees</a>
+</div>
+{% endif %}
+
+{% if is_holiday %}
+<div class="mt-3 bg-amber-50 border border-amber-200 text-amber-900 rounded px-4 py-2.5 text-sm">
+  This date is a holiday or a Sunday. It will not count towards attendance percentages.
+</div>
+{% endif %}
+
+{% if not rows %}
+  <div class="mt-6 bg-white rounded-lg shadow-sm p-8 text-center text-slate-600">
+    No students in this class yet.
+    {% if user.is_admin %}<a href="/students/import" class="text-brand-700 underline">Import students</a>{% endif %}
+  </div>
+{% else %}
+
+<form method="post" id="attendanceForm">
+  <input type="hidden" name="day" value="{{ day }}">
+
+  <!-- Everyone starts as Present; the teacher marks only the exceptions.
+       Marking 3 absences instead of 42 presences is what makes this take
+       20 seconds instead of 3 minutes. -->
+  <div class="no-print mt-4 sticky top-[6.5rem] z-10 bg-white rounded-lg shadow p-3 flex items-center gap-3 flex-wrap">
+    <span class="text-sm">
+      <b id="countPresent" class="text-green-700">0</b> present ·
+      <b id="countAbsent" class="text-red-700">0</b> absent
+    </span>
+    <button type="button" onclick="setAll('PRESENT')"
+            class="text-xs px-3 py-1.5 border border-slate-300 rounded">All present</button>
+    <button type="submit"
+            class="ml-auto bg-brand-800 text-white px-5 py-2.5 rounded font-medium">
+      Save attendance
+    </button>
+  </div>
+
+  <ul class="mt-3 bg-white rounded-lg shadow-sm divide-y divide-slate-100">
+    {% for row in rows %}
+    <li class="p-3 flex items-center gap-3 flex-wrap">
+      <span class="w-8 text-sm text-slate-500">{{ row.student.roll_number or '-' }}</span>
+      <span class="flex-1 min-w-[8rem] text-sm font-medium">
+        {{ row.student.full_name }}
+        {% if row.percentage is not none %}
+          <span class="ml-1 text-xs {% if row.percentage < 75 %}text-red-700{% else %}text-slate-400{% endif %}">
+            {{ row.percentage }}%
+          </span>
+        {% endif %}
+      </span>
+
+      <div class="flex gap-1" role="group"
+           aria-label="Attendance for {{ row.student.full_name }}">
+        {% for code, label in [('PRESENT','P'),('ABSENT','A'),('LATE','L'),('HALF_DAY','H'),('LEAVE','Lv')] %}
+        <label class="cursor-pointer">
+          <input type="radio" name="status_{{ row.student.id }}" value="{{ code }}"
+                 class="sr-only peer" onchange="updateCounts()"
+                 {% if row.status == code %}checked{% endif %}>
+          <span class="inline-flex items-center justify-center w-11 h-11 rounded border text-xs font-semibold
+                       border-slate-200 text-slate-400
+                       peer-checked:border-transparent peer-checked:text-white
+                       {% if code=='PRESENT' %}peer-checked:bg-green-600
+                       {% elif code=='ABSENT' %}peer-checked:bg-red-600
+                       {% elif code=='LATE' %}peer-checked:bg-amber-500
+                       {% elif code=='HALF_DAY' %}peer-checked:bg-blue-600
+                       {% else %}peer-checked:bg-slate-500{% endif %}">
+            {{ label }}
+          </span>
+        </label>
+        {% endfor %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="no-print mt-4">
+    <button type="submit" class="w-full bg-brand-800 text-white px-5 py-3 rounded font-medium">
+      Save attendance
+    </button>
+  </div>
+</form>
+
+<script>
+  function setAll(value) {
+    document.querySelectorAll('input[type=radio][value="' + value + '"]')
+            .forEach(function (el) { el.checked = true; });
+    updateCounts();
+  }
+  function updateCounts() {
+    var present = document.querySelectorAll('input[value="PRESENT"]:checked').length
+                + document.querySelectorAll('input[value="LATE"]:checked').length;
+    var absent  = document.querySelectorAll('input[value="ABSENT"]:checked').length;
+    document.getElementById('countPresent').textContent = present;
+    document.getElementById('countAbsent').textContent = absent;
+  }
+  updateCounts();
+</script>
+{% endif %}
+
+{% endblock %}

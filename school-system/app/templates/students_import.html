@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-xl font-semibold text-brand-900">Import students from Excel</h1>
+
+<div class="mt-4 bg-white rounded-lg shadow-sm p-5">
+  <h2 class="font-medium">How this works</h2>
+  <ol class="mt-2 text-sm text-slate-700 space-y-1.5 list-decimal list-inside">
+    <li>Download the template below, or use your school's existing student list.</li>
+    <li>Make sure there is a column for <b>Admission Number</b> and <b>Name</b>. Everything else is optional.</li>
+    <li>Upload the file. Classes are created automatically from the Class and Division columns.</li>
+  </ol>
+  <p class="mt-3 text-sm bg-blue-50 text-blue-900 rounded px-3 py-2">
+    Uploading the same file again is safe. Students are matched by admission number,
+    so existing records are updated rather than duplicated. To correct a mistake,
+    fix the spreadsheet and upload it again.
+  </p>
+  <a href="/students/import/template"
+     class="inline-block mt-4 px-4 py-2 border border-slate-300 rounded text-sm">
+    Download blank template (.xlsx)
+  </a>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="mt-5 bg-white rounded-lg shadow-sm p-5">
+  <label class="block text-sm font-medium">Choose your Excel file</label>
+  <input type="file" name="file" accept=".xlsx,.xlsm" required
+         class="mt-2 block w-full text-sm border border-slate-300 rounded p-2">
+  <button class="mt-4 px-5 py-2.5 bg-brand-800 text-white rounded font-medium">Import</button>
+</form>
+
+{% if result %}
+<div class="mt-5 bg-white rounded-lg shadow-sm p-5">
+  <h2 class="font-medium">Import result</h2>
+  <div class="mt-3 grid grid-cols-3 gap-3 text-center">
+    <div class="bg-green-50 rounded p-3">
+      <div class="text-2xl font-semibold text-green-700">{{ result.added }}</div>
+      <div class="text-xs">Added</div>
+    </div>
+    <div class="bg-blue-50 rounded p-3">
+      <div class="text-2xl font-semibold text-blue-700">{{ result.updated }}</div>
+      <div class="text-xs">Updated</div>
+    </div>
+    <div class="bg-amber-50 rounded p-3">
+      <div class="text-2xl font-semibold text-amber-700">{{ result.skipped }}</div>
+      <div class="text-xs">Skipped</div>
+    </div>
+  </div>
+
+  {% if result.sections_created %}
+  <p class="mt-3 text-sm text-slate-700">
+    Classes created: {{ result.sections_created | join(', ') }}
+  </p>
+  {% endif %}
+
+  {% if result.errors %}
+  <div class="mt-3">
+    <h3 class="text-sm font-medium text-red-800">Issues</h3>
+    <ul class="mt-1 text-sm text-red-700 space-y-1 max-h-60 overflow-y-auto">
+      {% for e in result.errors %}<li>{{ e }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if result.total %}
+  <a href="/students" class="inline-block mt-4 px-4 py-2 bg-brand-800 text-white rounded text-sm">
+    View students
+  </a>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

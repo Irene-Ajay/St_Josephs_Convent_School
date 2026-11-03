@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex items-start justify-between flex-wrap gap-2">
+  <div>
+    <h1 class="text-xl font-semibold text-brand-900">Absent students</h1>
+    <p class="text-sm text-slate-600">{{ day.strftime('%A, %d %B %Y') }}</p>
+  </div>
+  <form method="get" class="no-print flex gap-2">
+    <input type="date" name="day" value="{{ day }}" onchange="this.form.submit()"
+           class="border border-slate-300 rounded px-2 py-1.5 text-sm">
+    <a href="/messages?day={{ day }}" class="px-3 py-1.5 bg-brand-800 text-white rounded text-sm">
+      Notify parents
+    </a>
+  </form>
+</div>
+
+{% if not entries %}
+<div class="mt-6 bg-green-50 border border-green-200 rounded-lg p-8 text-center text-green-900">
+  No students marked absent on this date.
+</div>
+{% else %}
+<div class="mt-4 bg-white rounded-lg shadow-sm overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead class="bg-slate-50 text-left">
+      <tr>
+        <th class="p-3">Student</th>
+        <th class="p-3">Class</th>
+        <th class="p-3">Contact</th>
+        <th class="p-3">Days in a row</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      {% for entry in entries %}
+      <tr>
+        <td class="p-3">
+          <a href="/students/{{ entry.student.id }}" class="font-medium hover:underline">
+            {{ entry.student.full_name }}
+          </a>
+          <div class="text-xs text-slate-500">{{ entry.student.admission_number }}</div>
+        </td>
+        <td class="p-3">{{ entry.student.section.label if entry.student.section else '-' }}</td>
+        <td class="p-3">
+          {% if entry.student.contact_number %}
+            <a href="tel:{{ entry.student.contact_number }}" class="text-brand-700">
+              {{ entry.student.contact_number }}
+            </a>
+          {% else %}
+            <span class="text-amber-700 text-xs">No number on record</span>
+          {% endif %}
+        </td>
+        <td class="p-3">
+          {% if entry.consecutive >= 3 %}
+            <span class="px-2 py-1 rounded bg-red-100 text-red-800 text-xs font-medium">
+              {{ entry.consecutive }} days
+            </span>
+          {% else %}
+            {{ entry.consecutive }}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

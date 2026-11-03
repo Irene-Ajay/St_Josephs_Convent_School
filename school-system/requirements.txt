@@ -1,0 +1,11 @@
+# Deliberately short. Every line here is something the school's future
+# maintainer may have to reinstall, so the list stays minimal.
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+sqlalchemy==2.0.36
+jinja2==3.1.5
+python-multipart==0.0.20
+itsdangerous==2.2.0
+bcrypt==4.2.1
+openpyxl==3.1.5
+apscheduler==3.11.0

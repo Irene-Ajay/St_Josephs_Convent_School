@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-xl font-semibold text-brand-900">Add a staff member</h1>
+
+<form method="post" action="/staff/new" class="mt-4 bg-white rounded-lg shadow-sm p-5 space-y-4 max-w-lg">
+  {% if error %}
+    <p class="text-sm text-red-700 bg-red-50 rounded px-3 py-2">{{ error }}</p>
+  {% endif %}
+
+  <div>
+    <label class="block text-sm font-medium">Full name *</label>
+    <input name="full_name" required placeholder="Sr. Anitha Thomas"
+           class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium">Username *</label>
+    <input name="username" required minlength="3" placeholder="anitha"
+           class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+    <p class="text-xs text-slate-500 mt-1">
+      What they type to sign in. Lowercase, no spaces. Their first name or
+      employee number works well.
+    </p>
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium">Role *</label>
+    <select name="role" class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+      <option value="TEACHER">Teacher — marks attendance for their own classes only</option>
+      <option value="ADMIN">Office / Admin — full access to everything</option>
+    </select>
+    <p class="text-xs text-slate-500 mt-1">
+      Give Office / Admin only to staff who must manage students, import data
+      and create accounts.
+    </p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium">Email</label>
+      <input name="email" type="email" class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Phone</label>
+      <input name="phone" class="mt-1 w-full border border-slate-300 rounded px-3 py-2">
+    </div>
+  </div>
+
+  <div class="bg-blue-50 text-blue-900 text-sm rounded px-3 py-2">
+    A password will be created automatically and shown on the next page.
+    Write it down then — it cannot be viewed again.
+  </div>
+
+  <div class="flex gap-2">
+    <button class="px-5 py-2.5 bg-brand-800 text-white rounded font-medium">Create account</button>
+    <a href="/staff" class="px-5 py-2.5 border border-slate-300 rounded">Cancel</a>
+  </div>
+</form>
+
+<div class="mt-5 bg-white rounded-lg shadow-sm p-5 max-w-lg">
+  <h2 class="font-medium text-sm">After creating the account</h2>
+  <ol class="mt-2 text-sm text-slate-700 space-y-1 list-decimal list-inside">
+    <li>Give the staff member their username and password</li>
+    <li>Go to <a href="/classes" class="text-brand-700 underline">Classes</a> and assign them as class teacher</li>
+    <li>They can then mark attendance for that class only</li>
+  </ol>
+</div>
+{% endblock %}

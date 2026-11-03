@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ school_name }}{% endblock %}</title>
+  <!-- Tailwind from a CDN: no npm, no build step, nothing for the school's
+       future maintainer to compile. One less thing that can break. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#f0f4f8',100:'#d9e2ec',600:'#486581',700:'#334e68',800:'#243b53',900:'#102a43' }
+    }}}}
+  </script>
+  <style>
+    body { -webkit-tap-highlight-color: transparent; }
+    @media print { .no-print { display: none !important; } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+{% if user %}
+<header class="no-print bg-brand-800 text-white sticky top-0 z-20">
+  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+    <a href="/dashboard" class="font-semibold truncate">{{ school_name }}</a>
+    <div class="flex items-center gap-3 text-sm">
+      <span class="hidden sm:inline text-brand-100">{{ user.full_name }}</span>
+      <a href="/logout" class="px-3 py-1.5 rounded bg-brand-700 hover:bg-brand-600">Sign out</a>
+    </div>
+  </div>
+  <nav class="bg-brand-900 overflow-x-auto">
+    <div class="max-w-6xl mx-auto px-4 flex gap-1 text-sm whitespace-nowrap">
+      <a href="/dashboard" class="px-3 py-2.5 hover:bg-brand-800">Home</a>
+      <a href="/students" class="px-3 py-2.5 hover:bg-brand-800">Students</a>
+      <a href="/attendance/absent-today" class="px-3 py-2.5 hover:bg-brand-800">Absent today</a>
+      <a href="/messages" class="px-3 py-2.5 hover:bg-brand-800">Parent messages</a>
+      <a href="/reports" class="px-3 py-2.5 hover:bg-brand-800">Reports</a>
+      <a href="/archive" class="px-3 py-2.5 hover:bg-brand-800">Past records</a>
+      {% if user.is_admin %}
+      <a href="/students/import" class="px-3 py-2.5 hover:bg-brand-800">Import</a>
+      <a href="/classes" class="px-3 py-2.5 hover:bg-brand-800">Classes</a>
+      <a href="/staff" class="px-3 py-2.5 hover:bg-brand-800">Staff</a>
+      <a href="/years" class="px-3 py-2.5 hover:bg-brand-800">Years</a>
+      <a href="/promotion" class="px-3 py-2.5 hover:bg-brand-800">Promotion</a>
+      <a href="/settings" class="px-3 py-2.5 hover:bg-brand-800">Settings</a>
+      {% endif %}
+    </div>
+  </nav>
+</header>
+{% endif %}
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+  {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>
