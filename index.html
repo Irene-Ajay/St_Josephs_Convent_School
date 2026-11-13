@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="St. Joseph's Convent High School, Sumanahalli, Bengaluru - Digital Attendance, Student Records & Learning Portal">
+  <title>St. Joseph's Convent School | Learning & Attendance Portal</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  
+  <!-- Google Fonts: Plus Jakarta Sans (Headings), Playfair Display (Motto/Accents), Poppins (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS Engine -->
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #D45129;
+      --primary-dark: #A83515;
+      --primary-light: #FBF1ED;
+      --accent-red: #C62828;
+      --accent-sky: #0284C7;
+      --accent-sky-light: #E0F2FE;
+      --accent-green: #2E7D32;
+      --accent-gold: #D97706;
+      --bg-cream: #F8F9FA;
+      --surface-white: #FFFFFF;
+      --text-dark: #1E293B;
+      --text-muted: #64748B;
+      --border-soft: #E2E8F0;
+      --radius-card: 1rem;
+      --shadow-subtle: 0 4px 15px -2px rgba(212, 81, 41, 0.08), 0 2px 6px -2px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 12px 24px -4px rgba(212, 81, 41, 0.16);
+    }
+
+    .dark {
+      --bg-cream: #0F172A;
+      --surface-white: #1E293B;
+      --text-dark: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border-soft: #334155;
+      --primary-light: #2D1A14;
+      --accent-sky-light: #082F49;
+      --shadow-subtle: 0 4px 15px -2px rgba(0, 0, 0, 0.4);
+      --shadow-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.6);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      transition: background-color 0.25s ease, color 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .font-serif-display {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .font-heading {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-cream);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #475569;
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .dark .glass-nav {
+      background: rgba(30, 41, 59, 0.95);
+    }
+
+    .card-lift {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-lift:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background-color: #fff !important;
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-[#D45129] selection:text-white">
+
+  <!-- TOP BANNER & INSTITUTION HEADER -->
+  <header class="no-print bg-gradient-to-r from-[#A83515] via-[#D45129] to-[#C62828] text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex items-center justify-between gap-4">
+        
+        <!-- Brand & School Crest -->
+        <div class="flex items-center gap-3.5">
+          <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/40 shadow bg-white p-0.5 flex-shrink-0">
+            <img src="assets/images/logo.png" alt="St. Joseph's Convent Logo" class="w-full h-full object-contain" width="48" height="48" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-heading font-extrabold text-base sm:text-lg tracking-tight text-white leading-tight">
+                St. Joseph's Convent High School
+              </span>
+              <span class="hidden md:inline-block px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-semibold tracking-wider uppercase">
+                Learning & School Portal
+              </span>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-white/85">
+              <span>Sumanahalli, Bengaluru · Service Learning Project</span>
+              <span class="hidden sm:inline text-white/50">|</span>
+              <span class="font-serif-display italic hidden sm:inline text-amber-200">"Love · Light · Life"</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Profile & Action Bar -->
+        <div class="flex items-center gap-3">
+          <!-- Light/Dark Mode Switcher -->
+          <button onclick="toggleTheme()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-transform active:scale-95" title="Toggle Light/Dark Theme" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+          </button>
+
+          <!-- Current User Pill -->
+          <div class="hidden sm:flex items-center gap-2.5 bg-black/20 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-white/20 text-xs">
+            <div class="w-6 h-6 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-[11px]">
+              T
+            </div>
+            <div class="text-left leading-tight">
+              <div class="font-semibold text-white">Sr. Teresa, Class Teacher</div>
+              <div class="text-[10px] text-white/70">Grade 10 · Section A</div>
+            </div>
+          </div>
+
+          <button onclick="alert('Session logged. St. Joseph\'s Convent Portal is active.')" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition">
+            Sign out
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PRIMARY PORTAL NAVIGATION TABS -->
+    <nav class="bg-black/25 border-t border-white/15 overflow-x-auto" aria-label="Portal Modules">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 text-xs sm:text-sm font-medium whitespace-nowrap py-1">
+        
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn px-4 py-2.5 rounded-lg text-white font-semibold bg-[#D45129] shadow-sm flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button onclick="switchTab('attendance')" id="nav-attendance" class="tab-btn px-4 py-2.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          <span>Mark Attendance</span>
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        </button>
+
+        <button onclick="switchTab('absentees')" id="nav-absentees" class="tab-btn px-4 py-2.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span>Absent Today & WhatsApp</span>
+          <span id="badge-absent-count" class="px-1.5 py-0.2 rounded-full bg-red-600 text-[10px] font-bold text-white">4</span>
+        </button>
+
+        <button onclick="switchTab('students')" id="nav-students" class="tab-btn px-4 py-2.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <span>Student Records</span>
+        </button>
+
+        <button onclick="switchTab('import')" id="nav-import" class="tab-btn px-4 py-2.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          <span>Excel Import</span>
+        </button>
+
+        <button onclick="switchTab('reports')" id="nav-reports" class="tab-btn px-4 py-2.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Reports & Register</span>
+        </button>
+
+        <button onclick="switchTab('campus')" id="nav-campus" class="tab-btn px-4 py-2.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          <span>Campus & Heritage</span>
+        </button>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN PORTAL CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- ========================================== -->
+    <!-- 1. DASHBOARD VIEW (HOME) -->
+    <!-- ========================================== -->
+    <section id="view-dashboard" class="portal-view space-y-6">
+      
+      <!-- Welcome Card with School Building Backdrop -->
+      <div class="relative rounded-2xl overflow-hidden shadow-lg border border-[var(--border-soft)]">
+        <div class="absolute inset-0 z-0">
+          <img src="assets/images/school-building.jpg" alt="Campus Building" class="w-full h-full object-cover object-center" />
+          <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/80 to-[#D45129]/75"></div>
+        </div>
+
+        <div class="relative z-10 p-6 sm:p-8 text-white flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-xs font-semibold backdrop-blur-sm text-amber-200">
+              <span>Karnataka State Board (KSEEB) · Code: 2928060</span>
+            </div>
+            <h1 class="font-heading font-extrabold text-2xl sm:text-3xl tracking-tight">
+              Good morning, Sister Teresa 👋
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-200 font-light max-w-xl">
+              Welcome to the St. Joseph's Convent School Digital Records & Learning Portal. Below is your class attendance summary and daily administrative status for <strong id="portal-live-date" class="font-medium text-white">Today</strong>.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="switchTab('attendance')" class="px-5 py-3 rounded-xl bg-[#D45129] hover:bg-[#A83515] text-white font-heading font-bold text-xs uppercase tracking-wider shadow-lg transition flex items-center gap-2">
+              <span>Mark Today's Attendance</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+            <button onclick="switchTab('absentees')" class="px-4 py-3 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold text-xs transition flex items-center gap-2">
+              <span class="text-emerald-300">💬</span>
+              <span>Notify Absentees</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Attendance Alert (From GitHub repo design) -->
+      <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-sm">!</div>
+          <div>
+            <h4 class="font-heading font-bold text-sm text-amber-950 dark:text-amber-200">Attendance not yet submitted for 2 sections</h4>
+            <p class="text-amber-800 dark:text-amber-300">Class 10th Standard (Section B) and 9th Standard (Section A) have not yet finalized today's registers.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="selectClassForAttendance('10B')" class="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold transition">
+            Mark 10th B
+          </button>
+          <button onclick="selectClassForAttendance('9A')" class="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold transition">
+            Mark 9th A
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Metrics Strip (Total Students, Present, Absent, Attendance %) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm card-lift">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Total Enrolled</span>
+            <span class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-sm">👥</span>
+          </div>
+          <div class="font-heading font-extrabold text-2xl text-[var(--text-dark)]" id="kpi-total">1,240</div>
+          <p class="text-[11px] text-[var(--text-muted)] mt-1">42 Students in your section (10A)</p>
+        </div>
+
+        <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm card-lift">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Present Today</span>
+            <span class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center text-sm">✓</span>
+          </div>
+          <div class="font-heading font-extrabold text-2xl text-emerald-600" id="kpi-present">38</div>
+          <p class="text-[11px] text-emerald-600/80 mt-1">In 10th Standard - Section A</p>
+        </div>
+
+        <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm card-lift">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Absent Today</span>
+            <span class="w-7 h-7 rounded-lg bg-red-100 dark:bg-red-950 text-[#C62828] flex items-center justify-center text-sm">✕</span>
+          </div>
+          <div class="font-heading font-extrabold text-2xl text-[#C62828]" id="kpi-absent">4</div>
+          <p class="text-[11px] text-[#C62828]/80 mt-1">Ready for WhatsApp dispatch</p>
+        </div>
+
+        <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm card-lift">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Today's Ratio</span>
+            <span class="w-7 h-7 rounded-lg bg-[#D45129]/10 text-[#D45129] flex items-center justify-center text-sm">📊</span>
+          </div>
+          <div class="font-heading font-extrabold text-2xl text-[#D45129]" id="kpi-percent">90.5%</div>
+          <p class="text-[11px] text-[var(--text-muted)] mt-1">Target threshold: ≥ 85.0%</p>
+        </div>
+
+      </div>
+
+      <!-- Main Dashboard Grid: My Classes & Students Needing Attention -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- My Assigned Classes -->
+        <div class="lg:col-span-6 bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-heading font-bold text-base text-[var(--text-dark)]">My Assigned Classes</h3>
+            <span class="text-xs text-[#D45129] font-semibold">Academic Year 2026-27</span>
+          </div>
+
+          <div class="space-y-3">
+            <div class="p-4 rounded-xl bg-[var(--bg-cream)] border border-[var(--border-soft)] flex items-center justify-between">
+              <div>
+                <div class="font-heading font-bold text-sm text-[var(--text-dark)]">10th Standard — Section A</div>
+                <div class="text-xs text-[var(--text-muted)]">Class Teacher: Sr. Teresa · 42 Students · Room 102</div>
+              </div>
+              <button onclick="selectClassForAttendance('10A')" class="px-3.5 py-1.5 rounded-lg bg-[#D45129] text-white font-semibold text-xs hover:bg-[#A83515] transition flex items-center gap-1">
+                <span>Mark &rarr;</span>
+              </button>
+            </div>
+
+            <div class="p-4 rounded-xl bg-[var(--bg-cream)] border border-[var(--border-soft)] flex items-center justify-between">
+              <div>
+                <div class="font-heading font-bold text-sm text-[var(--text-dark)]">10th Standard — Section B</div>
+                <div class="text-xs text-[var(--text-muted)]">Subject Teacher: English / Science · 40 Students · Room 103</div>
+              </div>
+              <button onclick="selectClassForAttendance('10B')" class="px-3.5 py-1.5 rounded-lg border border-[#D45129] text-[#D45129] hover:bg-[#D45129] hover:text-white font-semibold text-xs transition flex items-center gap-1">
+                <span>Mark &rarr;</span>
+              </button>
+            </div>
+
+            <div class="p-4 rounded-xl bg-[var(--bg-cream)] border border-[var(--border-soft)] flex items-center justify-between">
+              <div>
+                <div class="font-heading font-bold text-sm text-[var(--text-dark)]">9th Standard — Section A</div>
+                <div class="text-xs text-[var(--text-muted)]">Subject Teacher: Moral Science · 44 Students · Room 101</div>
+              </div>
+              <button onclick="selectClassForAttendance('9A')" class="px-3.5 py-1.5 rounded-lg border border-[var(--border-soft)] text-[var(--text-dark)] hover:bg-[var(--primary-light)] font-semibold text-xs transition flex items-center gap-1">
+                <span>View &rarr;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Students Needing Attention (< 75% Attendance Warning) -->
+        <div class="lg:col-span-6 bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="font-heading font-bold text-base text-[var(--text-dark)] flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
+              <span>Students Needing Attention</span>
+            </h3>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950 text-red-700">Below 75%</span>
+          </div>
+          <p class="text-xs text-[var(--text-muted)] mb-4">Mandatory SSLC board compliance requires minimum 75% overall attendance.</p>
+
+          <div class="divide-y divide-[var(--border-soft)] text-xs">
+            <div class="py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-[var(--text-dark)]">Kavya Murthy</div>
+                <div class="text-[11px] text-[var(--text-muted)]">Roll No: 18 · 10th Std A · 3 Consecutive Absences</div>
+              </div>
+              <div class="text-right">
+                <span class="font-bold text-red-600 text-sm">68.4%</span>
+                <button onclick="sendDirectWhatsApp('9845012345', 'Kavya Murthy', '10A')" class="block text-[11px] text-[#0284C7] hover:underline font-medium">WhatsApp Parent</button>
+              </div>
+            </div>
+
+            <div class="py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-[var(--text-dark)]">Mohammed Zeeshan</div>
+                <div class="text-[11px] text-[var(--text-muted)]">Roll No: 24 · 10th Std A · Health Leave</div>
+              </div>
+              <div class="text-right">
+                <span class="font-bold text-red-600 text-sm">71.2%</span>
+                <button onclick="sendDirectWhatsApp('9880098765', 'Mohammed Zeeshan', '10A')" class="block text-[11px] text-[#0284C7] hover:underline font-medium">WhatsApp Parent</button>
+              </div>
+            </div>
+
+            <div class="py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-[var(--text-dark)]">Roshan Francis</div>
+                <div class="text-[11px] text-[var(--text-muted)]">Roll No: 31 · 10th Std A · Needs Follow-up</div>
+              </div>
+              <div class="text-right">
+                <span class="font-bold text-red-600 text-sm">73.8%</span>
+                <button onclick="sendDirectWhatsApp('9900112233', 'Roshan Francis', '10A')" class="block text-[11px] text-[#0284C7] hover:underline font-medium">WhatsApp Parent</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. ATTENDANCE MARKING VIEW -->
+    <!-- ========================================== -->
+    <section id="view-attendance" class="portal-view hidden space-y-6">
+      
+      <!-- Action Toolbar -->
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="font-heading font-extrabold text-xl text-[var(--text-dark)]" id="attendance-section-title">10th Standard — Section A</h2>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D45129]/15 text-[#D45129] font-bold">Class Roster</span>
+          </div>
+          <p class="text-xs text-[var(--text-muted)] mt-0.5">Click any code to record status: P (Present), A (Absent), L (Late), H (Half Day), Lv (Leave).</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-1.5 text-xs bg-[var(--bg-cream)] px-3 py-1.5 rounded-lg border border-[var(--border-soft)]">
+            <label for="attendance-date" class="font-semibold text-[var(--text-muted)]">Date:</label>
+            <input type="date" id="attendance-date" class="bg-transparent text-[var(--text-dark)] font-medium focus:outline-none" />
+          </div>
+
+          <button onclick="markAllStatus('PRESENT')" class="px-3 py-2 rounded-lg border border-[var(--border-soft)] text-xs font-semibold text-[var(--text-dark)] hover:bg-[var(--primary-light)] transition">
+            Mark All Present
+          </button>
+
+          <button onclick="saveAttendance()" class="px-5 py-2 rounded-lg bg-[#D45129] hover:bg-[#A83515] text-white text-xs font-bold uppercase tracking-wider shadow transition flex items-center gap-1.5">
+            <span>Save Attendance</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sticky Counter Status Bar -->
+      <div class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-[var(--border-soft)] rounded-xl p-3.5 shadow-md flex items-center justify-between text-xs">
+        <div class="flex items-center gap-4">
+          <span class="font-semibold text-[var(--text-dark)]">Live Counts:</span>
+          <span class="inline-flex items-center gap-1 text-emerald-600 font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span id="live-present-count">38</span> Present
+          </span>
+          <span class="inline-flex items-center gap-1 text-red-600 font-bold">
+            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+            <span id="live-absent-count">4</span> Absent
+          </span>
+          <span class="inline-flex items-center gap-1 text-amber-600 font-bold hidden sm:inline-flex">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span id="live-late-count">0</span> Late
+          </span>
+        </div>
+        <div class="text-[11px] text-[var(--text-muted)]">
+          One-tap fast exception marking active
+        </div>
+      </div>
+
+      <!-- Save Confirmation Alert (Hidden Initially) -->
+      <div id="attendance-save-banner" class="hidden p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 text-emerald-900 dark:text-emerald-200 text-xs flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-sm">✓</span>
+          <span>Attendance saved successfully for 42 students.</span>
+        </div>
+        <button onclick="switchTab('absentees')" class="px-3 py-1 rounded-lg bg-emerald-700 text-white font-semibold text-xs hover:bg-emerald-800 transition">
+          Notify Absentees on WhatsApp &rarr;
+        </button>
+      </div>
+
+      <!-- Student Attendance Roster List -->
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl overflow-hidden shadow-sm">
+        <div class="divide-y divide-[var(--border-soft)]" id="attendance-roster-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. ABSENT TODAY & WHATSAPP NOTIFICATIONS -->
+    <!-- ========================================== -->
+    <section id="view-absentees" class="portal-view hidden space-y-6">
+      
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-red-100 text-[#C62828]">
+            Today's Absentees · 10th Std A
+          </span>
+          <h2 class="font-heading font-extrabold text-xl text-[var(--text-dark)] mt-1">Parent Absence Notifications</h2>
+          <p class="text-xs text-[var(--text-muted)]">Indian DLT regulations make automated SMS costly. Use zero-cost one-click official WhatsApp messaging to inform parents immediately.</p>
+        </div>
+
+        <button onclick="notifyAllWhatsApp()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-heading font-bold text-xs uppercase tracking-wider shadow transition flex items-center gap-2">
+          <span>Notify All 4 Parents via WhatsApp</span>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.06-2.033-.49-1.613-.662-2.658-2.31-2.738-2.417-.08-.108-.65-1.026-.65-1.956 0-.931.488-1.389.66-1.579.173-.19.378-.238.504-.238.127 0 .252.002.36.008.115.006.268-.044.42.321.157.377.534 1.302.581 1.398.047.096.079.208.016.333-.063.125-.095.203-.189.313-.095.11-.198.246-.283.33-.095.094-.194.197-.083.388.111.191.493.813 1.058 1.316.726.646 1.339.846 1.53.941.19.096.302.079.413-.048.111-.127.476-.554.603-.744.127-.19.254-.159.428-.095.175.063 1.11.523 1.301.618.19.095.317.143.365.222.048.079.048.46-.096.865z"/></svg>
+        </button>
+      </div>
+
+      <!-- Absent Students Table -->
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl overflow-hidden shadow-sm">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-[var(--bg-cream)] text-[var(--text-muted)] font-heading uppercase text-[11px] border-b border-[var(--border-soft)]">
+            <tr>
+              <th class="py-3 px-4">Roll</th>
+              <th class="py-3 px-4">Student Name</th>
+              <th class="py-3 px-4">Consecutive Days</th>
+              <th class="py-3 px-4">Parent / Guardian</th>
+              <th class="py-3 px-4">Phone Number</th>
+              <th class="py-3 px-4 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--border-soft)] text-[var(--text-dark)]" id="absentees-table-body">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. STUDENT RECORDS & SEARCH -->
+    <!-- ========================================== -->
+    <section id="view-students" class="portal-view hidden space-y-6">
+      
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="font-heading font-extrabold text-xl text-[var(--text-dark)]">Student Records Directory</h2>
+          <p class="text-xs text-[var(--text-muted)]">Single, searchable database of enrolled students with contact and attendance histories.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="openAddStudentModal()" class="px-4 py-2 rounded-xl bg-[#D45129] hover:bg-[#A83515] text-white text-xs font-semibold shadow transition flex items-center gap-1.5">
+            <span>+ Add Student</span>
+          </button>
+          <button onclick="switchTab('import')" class="px-3.5 py-2 rounded-xl border border-[var(--border-soft)] text-xs font-semibold text-[var(--text-dark)] hover:bg-[var(--primary-light)] transition">
+            Import Excel
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-4 shadow-sm grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
+        <div class="sm:col-span-6 relative">
+          <input type="text" id="student-search-input" oninput="filterStudents()" placeholder="Search by student name, roll number, or admission ID..." class="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] focus:outline-none focus:ring-2 focus:ring-[#D45129] text-[var(--text-dark)] pl-9" />
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+
+        <div class="sm:col-span-3">
+          <select id="class-filter-select" onchange="filterStudents()" class="w-full px-3 py-2.5 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] focus:outline-none focus:ring-2 focus:ring-[#D45129] text-[var(--text-dark)]">
+            <option value="ALL">All Sections (10A, 10B, 9A)</option>
+            <option value="10A" selected>10th Standard - Sec A</option>
+            <option value="10B">10th Standard - Sec B</option>
+            <option value="9A">9th Standard - Sec A</option>
+          </select>
+        </div>
+
+        <div class="sm:col-span-3">
+          <select id="status-filter-select" onchange="filterStudents()" class="w-full px-3 py-2.5 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] focus:outline-none focus:ring-2 focus:ring-[#D45129] text-[var(--text-dark)]">
+            <option value="ALL">All Attendance Levels</option>
+            <option value="LOW">Low Attendance (&lt; 75%)</option>
+            <option value="GOOD">Good Attendance (&ge; 85%)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Students Table -->
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-[var(--bg-cream)] text-[var(--text-muted)] font-heading uppercase text-[11px] border-b border-[var(--border-soft)]">
+              <tr>
+                <th class="py-3 px-4">Roll</th>
+                <th class="py-3 px-4">Adm No</th>
+                <th class="py-3 px-4">Student Full Name</th>
+                <th class="py-3 px-4">Section</th>
+                <th class="py-3 px-4">Parent / Phone</th>
+                <th class="py-3 px-4">Attendance %</th>
+                <th class="py-3 px-4 text-right">Profile</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[var(--border-soft)] text-[var(--text-dark)]" id="students-table-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 5. EXCEL IMPORT SIMULATION -->
+    <!-- ========================================== -->
+    <section id="view-import" class="portal-view hidden space-y-6">
+      
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm">
+        <h2 class="font-heading font-extrabold text-xl text-[var(--text-dark)] mb-1">Import Students from Excel</h2>
+        <p class="text-xs text-[var(--text-muted)]">Upload the school's existing spreadsheet. The importer auto-detects columns, skips empty rows, and updates existing records without duplication.</p>
+      </div>
+
+      <div class="bg-[var(--surface-white)] border-2 border-dashed border-[var(--border-soft)] hover:border-[#D45129] rounded-2xl p-10 text-center transition">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 flex items-center justify-center text-3xl mb-4">
+          📊
+        </div>
+        <h3 class="font-heading font-bold text-base text-[var(--text-dark)] mb-1">Upload Student Excel Sheet (.xlsx / .csv)</h3>
+        <p class="text-xs text-[var(--text-muted)] max-w-md mx-auto mb-5">
+          Expected headers: Roll No, Full Name, Parent Name, Phone, Gender, Date of Birth.
+        </p>
+
+        <label class="cursor-pointer inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#D45129] hover:bg-[#A83515] text-white text-xs font-bold uppercase tracking-wider transition shadow">
+          <span>Choose Excel File</span>
+          <input type="file" accept=".xlsx, .xls, .csv" class="hidden" onchange="simulateExcelUpload(this)" />
+        </label>
+      </div>
+
+      <!-- Sample Excel Format Download -->
+      <div class="p-4 rounded-xl bg-[var(--surface-white)] border border-[var(--border-soft)] flex items-center justify-between text-xs">
+        <div>
+          <span class="font-bold text-[var(--text-dark)]">Need the official template?</span>
+          <span class="text-[var(--text-muted)] ml-1">Download standard St. Joseph's roster format.</span>
+        </div>
+        <button onclick="alert('Downloading St_Josephs_Student_Import_Template.xlsx')" class="px-3 py-1.5 rounded-lg border border-[var(--border-soft)] text-xs font-semibold hover:bg-[var(--primary-light)] text-[var(--text-dark)]">
+          Download .xlsx Template
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 6. REPORTS & REGISTERS -->
+    <!-- ========================================== -->
+    <section id="view-reports" class="portal-view hidden space-y-6">
+      
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="font-heading font-extrabold text-xl text-[var(--text-dark)]">Attendance Reports & Monthly Registers</h2>
+          <p class="text-xs text-[var(--text-muted)]">Generate official Karnataka Education Department format registers and monthly statistics.</p>
+        </div>
+
+        <button onclick="window.print()" class="px-4 py-2.5 rounded-xl bg-[#D45129] hover:bg-[#A83515] text-white text-xs font-bold uppercase tracking-wider shadow transition flex items-center gap-2">
+          <span>Print / Export Register</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+        </button>
+      </div>
+
+      <!-- Report Generation Form -->
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-5 shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+        <div>
+          <label class="block font-semibold text-[var(--text-dark)] mb-1">Select Class / Section</label>
+          <select class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]">
+            <option>10th Standard - Section A</option>
+            <option>10th Standard - Section B</option>
+            <option>9th Standard - Section A</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-[var(--text-dark)] mb-1">Month & Year</label>
+          <select class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]">
+            <option>November 2026</option>
+            <option>October 2026</option>
+            <option>September 2026</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-[var(--text-dark)] mb-1">Report Type</label>
+          <select class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]">
+            <option>Monthly Official Register</option>
+            <option>Chronic Absentee Alert Sheet</option>
+            <option>Parent WhatsApp Log</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Printable Register Preview -->
+      <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-xl p-6 shadow-sm space-y-4">
+        <div class="text-center border-b border-[var(--border-soft)] pb-4">
+          <h3 class="font-heading font-extrabold text-base text-[var(--text-dark)] uppercase">St. Joseph's Convent High School, Sumanahalli</h3>
+          <p class="text-xs text-[var(--text-muted)]">Monthly Class Attendance Summary · Class 10 - Section A · Academic Year 2026-27</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 text-center text-xs py-2 bg-[var(--bg-cream)] rounded-lg">
+          <div><strong>Total Working Days:</strong> 24</div>
+          <div><strong>Average Attendance:</strong> 91.8%</div>
+          <div><strong>Students Below 75%:</strong> 3</div>
+        </div>
+
+        <p class="text-xs text-[var(--text-muted)] text-center italic">
+          Use the "Print / Export Register" button above to generate a printer-ready or PDF ledger.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 7. CAMPUS & HERITAGE (BRANDING INTEGRATION) -->
+    <!-- ========================================== -->
+    <section id="view-campus" class="portal-view hidden space-y-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-2xl p-6 sm:p-8 shadow-sm">
+        <div class="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-lg border border-[var(--border-soft)]">
+          <img src="assets/images/school-building.jpg" alt="St. Joseph's Convent Campus" class="w-full h-[320px] object-cover" />
+          <div class="absolute bottom-3 left-3 right-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-3 rounded-xl border border-white/20 text-xs">
+            <div class="font-bold text-[var(--text-dark)]">Campus Quadrangle & Covered Stage</div>
+            <div class="text-[11px] text-[var(--text-muted)]">Malagala, Nagar Bhavi, Bengaluru 560072</div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D45129]/10 text-[#D45129] font-bold text-xs">
+            <span>Our Heritage & Charism</span>
+          </div>
+          <h2 class="font-heading font-extrabold text-2xl text-[var(--text-dark)]">
+            Rooted in <span class="font-serif-display italic text-[#D45129]">Love · Light · Life</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
+            Established under the Sumanahalli Society in Western Bengaluru, St. Joseph's Convent High School has dedicated over 35 years to inclusive quality education, discipline, and compassionate service.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div class="p-3 rounded-xl bg-[var(--bg-cream)] border border-[var(--border-soft)] text-center">
+              <div class="text-xl mb-1">❤️</div>
+              <div class="font-bold text-xs text-[var(--text-dark)]">LOVE</div>
+              <div class="text-[10px] text-[var(--text-muted)]">Compassionate Service</div>
+            </div>
+            <div class="p-3 rounded-xl bg-[var(--bg-cream)] border border-[var(--border-soft)] text-center">
+              <div class="text-xl mb-1">💡</div>
+              <div class="font-bold text-xs text-[var(--text-dark)]">LIGHT</div>
+              <div class="text-[10px] text-[var(--text-muted)]">Academic Truth</div>
+            </div>
+            <div class="p-3 rounded-xl bg-[var(--bg-cream)] border border-[var(--border-soft)] text-center">
+              <div class="text-xl mb-1">🌱</div>
+              <div class="font-bold text-xs text-[var(--text-dark)]">LIFE</div>
+              <div class="text-[10px] text-[var(--text-muted)]">Holistic Vitality</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL: ADD STUDENT DIALOG -->
+  <div id="modal-add-student" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+      <button onclick="closeAddStudentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
+      <h3 class="font-heading font-bold text-lg text-[var(--text-dark)] mb-1">Add Student Record</h3>
+      <p class="text-xs text-[var(--text-muted)] mb-4">Enroll a student into St. Joseph's digital register.</p>
+
+      <form id="add-student-form" onsubmit="saveNewStudent(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-semibold mb-1 text-[var(--text-dark)]">Full Name *</label>
+          <input type="text" id="new-name" required placeholder="e.g. Maria Joseph" class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1 text-[var(--text-dark)]">Roll Number *</label>
+            <input type="number" id="new-roll" required placeholder="e.g. 43" class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]" />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1 text-[var(--text-dark)]">Section *</label>
+            <select id="new-section" class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]">
+              <option value="10A">10th Std - Sec A</option>
+              <option value="10B">10th Std - Sec B</option>
+              <option value="9A">9th Std - Sec A</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1 text-[var(--text-dark)]">Parent / Guardian *</label>
+            <input type="text" id="new-parent" required placeholder="Parent name" class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]" />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1 text-[var(--text-dark)]">Mobile (WhatsApp) *</label>
+            <input type="tel" id="new-phone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-3 py-2 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]" />
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeAddStudentModal()" class="px-4 py-2 rounded-lg border border-[var(--border-soft)] text-[var(--text-dark)]">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-[#D45129] text-white font-bold uppercase tracking-wider">Save Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: VIEW STUDENT DETAIL -->
+  <div id="modal-student-detail" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[var(--surface-white)] border border-[var(--border-soft)] rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+      <button onclick="closeStudentDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
+      
+      <div class="flex items-center gap-3.5 mb-4">
+        <div class="w-12 h-12 rounded-full bg-[#D45129]/15 text-[#D45129] font-bold text-lg flex items-center justify-center" id="detail-avatar">
+          SJ
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-[var(--text-dark)]" id="detail-name">Student Name</h3>
+          <p class="text-xs text-[var(--text-muted)]" id="detail-meta">Roll No · 10th Standard A</p>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-xs border-t border-b border-[var(--border-soft)] py-4 my-3">
+        <div class="grid grid-cols-2 gap-2">
+          <div><span class="text-[var(--text-muted)]">Admission Number:</span> <strong class="text-[var(--text-dark)]" id="detail-adm">SJ-2022-042</strong></div>
+          <div><span class="text-[var(--text-muted)]">Attendance Rate:</span> <strong id="detail-attendance" class="text-emerald-600 font-bold">92.4%</strong></div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div><span class="text-[var(--text-muted)]">Parent/Guardian:</span> <strong class="text-[var(--text-dark)]" id="detail-parent">Father Name</strong></div>
+          <div><span class="text-[var(--text-muted)]">Emergency Phone:</span> <strong class="text-[var(--text-dark)]" id="detail-phone">+91 98450 XXXXX</strong></div>
+        </div>
+        <div>
+          <span class="text-[var(--text-muted)]">Status:</span>
+          <span class="ml-1 inline-block px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-semibold">Active Enrollment</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button id="detail-whatsapp-btn" class="px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold text-xs hover:bg-emerald-700 transition flex items-center gap-1.5">
+          <span>WhatsApp Parent</span>
+        </button>
+        <button onclick="closeStudentDetailModal()" class="px-4 py-2 rounded-lg border border-[var(--border-soft)] text-xs text-[var(--text-dark)]">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTAL JAVASCRIPT STATE ENGINE -->
+  <script>
+    // Initial Student Dataset (Realistic St. Joseph's Convent Roster)
+    let students = [
+      { id: 1, roll: 1, name: "Aaron D'Souza", section: "10A", parent: "David D'Souza", phone: "9845112233", attendance: 95.2, status: "PRESENT" },
+      { id: 2, roll: 2, name: "Aishwarya Rao", section: "10A", parent: "Ramesh Rao", phone: "9845223344", attendance: 92.1, status: "PRESENT" },
+      { id: 3, roll: 3, name: "Allen Peter", section: "10A", parent: "Peter Francis", phone: "9845334455", attendance: 88.5, status: "PRESENT" },
+      { id: 4, roll: 4, name: "Bhavana Suresh", section: "10A", parent: "Suresh Gowda", phone: "9845445566", attendance: 94.0, status: "PRESENT" },
+      { id: 5, roll: 5, name: "Daniel Rodrigues", section: "10A", parent: "Joseph Rodrigues", phone: "9845556677", attendance: 86.4, status: "PRESENT" },
+      { id: 6, roll: 6, name: "Divya Mary", section: "10A", parent: "Anthony Swamy", phone: "9845667788", attendance: 96.0, status: "PRESENT" },
+      { id: 7, roll: 7, name: "Immanuel Raj", section: "10A", parent: "Raj Kumar", phone: "9845778899", attendance: 82.5, status: "PRESENT" },
+      { id: 8, roll: 8, name: "Jennie Fernandez", section: "10A", parent: "Martin Fernandez", phone: "9845889900", attendance: 91.0, status: "PRESENT" },
+      { id: 9, roll: 9, name: "Joshua Thomas", section: "10A", parent: "Thomas Mathew", phone: "9845990011", attendance: 89.2, status: "PRESENT" },
+      { id: 10, roll: 10, name: "Kavya Murthy", section: "10A", parent: "S. N. Murthy", phone: "9845012345", attendance: 68.4, status: "ABSENT" },
+      { id: 11, roll: 11, name: "Kiran Kumar", section: "10A", parent: "Venkatesh K.", phone: "9845123456", attendance: 84.1, status: "PRESENT" },
+      { id: 12, roll: 12, name: "Lavanya S.", section: "10A", parent: "Somashekar B.", phone: "9845234567", attendance: 90.0, status: "PRESENT" },
+      { id: 13, roll: 13, name: "Mohammed Zeeshan", section: "10A", parent: "Mohammed Ismail", phone: "9880098765", attendance: 71.2, status: "ABSENT" },
+      { id: 14, roll: 14, name: "Nisha Clement", section: "10A", parent: "Clement D.", phone: "9845456789", attendance: 87.0, status: "PRESENT" },
+      { id: 15, roll: 15, name: "Pooja Hegde", section: "10A", parent: "Ananth Hegde", phone: "9845567890", attendance: 93.5, status: "PRESENT" },
+      { id: 16, roll: 16, name: "Preetham Paul", section: "10A", parent: "Paul V.", phone: "9845678901", attendance: 85.0, status: "PRESENT" },
+      { id: 17, roll: 17, name: "Rahul Benedict", section: "10A", parent: "Benedict Xavier", phone: "9845789012", attendance: 81.3, status: "PRESENT" },
+      { id: 18, roll: 18, name: "Ria Ann George", section: "10A", parent: "George K.", phone: "9845890123", attendance: 97.4, status: "PRESENT" },
+      { id: 19, roll: 19, name: "Roshan Francis", section: "10A", parent: "Francis Xavier", phone: "9900112233", attendance: 73.8, status: "ABSENT" },
+      { id: 20, roll: 20, name: "Sneha Manjunath", section: "10A", parent: "Manjunath C.", phone: "9900223344", attendance: 79.5, status: "ABSENT" }
+    ];
+
+    // Initialize Portal on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set today's date in header & date input
+      const today = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('portal-live-date').textContent = today.toLocaleDateString('en-IN', options);
+      
+      const dateInput = document.getElementById('attendance-date');
+      if (dateInput) {
+        dateInput.value = today.toISOString().split('T')[0];
+      }
+
+      renderAttendanceRoster();
+      renderAbsenteesTable();
+      renderStudentsDirectory();
+      updateDashboardCounts();
+    });
+
+    // Module Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.portal-view').forEach(view => view.classList.add('hidden'));
+      const activeView = document.getElementById('view-' + tabId);
+      if (activeView) activeView.classList.remove('hidden');
+
+      // Update Tab Styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-[#D45129]', 'text-white', 'shadow-sm');
+        btn.classList.add('text-white/80');
+      });
+      const activeNav = document.getElementById('nav-' + tabId);
+      if (activeNav) {
+        activeNav.classList.add('bg-[#D45129]', 'text-white', 'shadow-sm');
+        activeNav.classList.remove('text-white/80');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectClassForAttendance(sec) {
+      document.getElementById('attendance-section-title').textContent = sec === '10B' ? '10th Standard — Section B' : (sec === '9A' ? '9th Standard — Section A' : '10th Standard — Section A');
+      switchTab('attendance');
+    }
+
+    // Render Attendance Roster (Fast one-tap marking from GitHub design)
+    function renderAttendanceRoster() {
+      const container = document.getElementById('attendance-roster-container');
+      if (!container) return;
+
+      container.innerHTML = students.map(student => `
+        <div class="p-3 sm:p-4 flex items-center justify-between flex-wrap gap-2 hover:bg-[var(--bg-cream)] transition-colors">
+          <div class="flex items-center gap-3">
+            <span class="w-7 text-xs font-mono font-bold text-slate-400">#${student.roll}</span>
+            <div>
+              <div class="font-heading font-semibold text-xs sm:text-sm text-[var(--text-dark)]">${student.name}</div>
+              <div class="text-[11px] text-[var(--text-muted)]">
+                Cumulative Attendance: 
+                <span class="font-bold ${student.attendance < 75 ? 'text-red-600' : 'text-slate-500'}">${student.attendance}%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick status radio pill selector (P, A, L, H, Lv) -->
+          <div class="flex items-center gap-1.5" role="group" aria-label="Status for ${student.name}">
+            <button onclick="setStatus(${student.id}, 'PRESENT')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${student.status === 'PRESENT' ? 'bg-emerald-600 text-white shadow-sm' : 'border border-[var(--border-soft)] text-slate-400 hover:text-emerald-700'}">P</button>
+            <button onclick="setStatus(${student.id}, 'ABSENT')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${student.status === 'ABSENT' ? 'bg-red-600 text-white shadow-sm' : 'border border-[var(--border-soft)] text-slate-400 hover:text-red-700'}">A</button>
+            <button onclick="setStatus(${student.id}, 'LATE')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${student.status === 'LATE' ? 'bg-amber-500 text-white shadow-sm' : 'border border-[var(--border-soft)] text-slate-400 hover:text-amber-700'}">L</button>
+            <button onclick="setStatus(${student.id}, 'HALF_DAY')" class="px-2 py-1.5 rounded-lg text-xs font-bold transition ${student.status === 'HALF_DAY' ? 'bg-blue-600 text-white shadow-sm' : 'border border-[var(--border-soft)] text-slate-400 hover:text-blue-700'}">H</button>
+            <button onclick="setStatus(${student.id}, 'LEAVE')" class="px-2 py-1.5 rounded-lg text-xs font-bold transition ${student.status === 'LEAVE' ? 'bg-slate-600 text-white shadow-sm' : 'border border-[var(--border-soft)] text-slate-400 hover:text-slate-700'}">Lv</button>
+          </div>
+        </div>
+      `).join('');
+
+      updateAttendanceCounters();
+    }
+
+    function setStatus(id, newStatus) {
+      const student = students.find(s => s.id === id);
+      if (student) {
+        student.status = newStatus;
+        renderAttendanceRoster();
+        renderAbsenteesTable();
+        updateDashboardCounts();
+      }
+    }
+
+    function markAllStatus(val) {
+      students.forEach(s => s.status = val);
+      renderAttendanceRoster();
+      renderAbsenteesTable();
+      updateDashboardCounts();
+    }
+
+    function updateAttendanceCounters() {
+      const present = students.filter(s => s.status === 'PRESENT' || s.status === 'LATE').length;
+      const absent = students.filter(s => s.status === 'ABSENT').length;
+      const late = students.filter(s => s.status === 'LATE').length;
+
+      document.getElementById('live-present-count').textContent = present;
+      document.getElementById('live-absent-count').textContent = absent;
+      document.getElementById('live-late-count').textContent = late;
+      document.getElementById('badge-absent-count').textContent = absent;
+    }
+
+    function updateDashboardCounts() {
+      const present = students.filter(s => s.status === 'PRESENT' || s.status === 'LATE').length;
+      const absent = students.filter(s => s.status === 'ABSENT').length;
+      const total = students.length;
+      const pct = ((present / total) * 100).toFixed(1);
+
+      document.getElementById('kpi-present').textContent = present;
+      document.getElementById('kpi-absent').textContent = absent;
+      document.getElementById('kpi-percent').textContent = pct + '%';
+    }
+
+    function saveAttendance() {
+      const banner = document.getElementById('attendance-save-banner');
+      banner.classList.remove('hidden');
+      setTimeout(() => banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    }
+
+    // Render Absentees List & One-Click WhatsApp Notification (From GitHub repo design)
+    function renderAbsenteesTable() {
+      const tbody = document.getElementById('absentees-table-body');
+      if (!tbody) return;
+
+      const absentees = students.filter(s => s.status === 'ABSENT');
+
+      if (absentees.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-[var(--text-muted)]">No students absent today! All students present.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = absentees.map(s => {
+        const msg = encodeURIComponent(`Dear Parent, St. Joseph's Convent High School Sumanahalli informs you that your ward ${s.name} (Class ${s.section}, Roll No ${s.roll}) was marked ABSENT today. Please contact the class teacher or school office if this was unplanned.`);
+        const waUrl = `https://wa.me/91${s.phone}?text=${msg}`;
+        return `
+          <tr class="hover:bg-[var(--bg-cream)] transition-colors">
+            <td class="py-3 px-4 font-mono font-bold text-slate-400">#${s.roll}</td>
+            <td class="py-3 px-4 font-semibold text-[var(--text-dark)]">${s.name}</td>
+            <td class="py-3 px-4">
+              <span class="inline-block px-2 py-0.5 rounded-full ${s.attendance < 75 ? 'bg-red-100 text-red-700 font-bold' : 'bg-amber-100 text-amber-800'} text-[10px]">
+                ${s.attendance < 75 ? '3+ Days (Critical)' : '1 Day'}
+              </span>
+            </td>
+            <td class="py-3 px-4 text-[var(--text-muted)]">${s.parent}</td>
+            <td class="py-3 px-4 font-mono">${s.phone}</td>
+            <td class="py-3 px-4 text-right">
+              <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-sm transition">
+                <span>WhatsApp Parent</span>
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function sendDirectWhatsApp(phone, studentName, section) {
+      const msg = encodeURIComponent(`Dear Parent, St. Joseph's Convent High School Sumanahalli informs you that your ward ${studentName} (Class ${section}) has attendance below the 75% required board threshold. Please meet the class teacher at the school office.`);
+      window.open(`https://wa.me/91${phone}?text=${msg}`, '_blank');
+    }
+
+    function notifyAllWhatsApp() {
+      const absentees = students.filter(s => s.status === 'ABSENT');
+      alert(`Prepared WhatsApp notification batch for ${absentees.length} absent students. Individual WhatsApp chats can now be opened with pre-filled school messages!`);
+    }
+
+    // Render Students Directory
+    function renderStudentsDirectory(dataset = students) {
+      const tbody = document.getElementById('students-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = dataset.map(s => `
+        <tr class="hover:bg-[var(--bg-cream)] transition-colors">
+          <td class="py-3 px-4 font-mono text-slate-400">#${s.roll}</td>
+          <td class="py-3 px-4 font-mono text-slate-500">SJ-2022-${String(s.id).padStart(3, '0')}</td>
+          <td class="py-3 px-4 font-semibold text-[var(--text-dark)]">${s.name}</td>
+          <td class="py-3 px-4 text-[var(--text-muted)]">${s.section}</td>
+          <td class="py-3 px-4 text-[var(--text-muted)]">
+            <div>${s.parent}</div>
+            <div class="font-mono text-[11px] text-slate-400">${s.phone}</div>
+          </td>
+          <td class="py-3 px-4">
+            <span class="inline-block px-2.5 py-0.5 rounded-full font-bold text-xs ${s.attendance < 75 ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}">
+              ${s.attendance}%
+            </span>
+          </td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="viewStudentDetail(${s.id})" class="px-2.5 py-1 rounded-lg border border-[var(--border-soft)] hover:bg-[#D45129] hover:text-white transition font-medium text-xs">
+              View Profile
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterStudents() {
+      const query = document.getElementById('student-search-input').value.toLowerCase();
+      const sec = document.getElementById('class-filter-select').value;
+      const status = document.getElementById('status-filter-select').value;
+
+      let filtered = students.filter(s => {
+        const matchesQuery = s.name.toLowerCase().includes(query) || String(s.roll).includes(query);
+        const matchesSec = sec === 'ALL' || s.section === sec;
+        const matchesStatus = status === 'ALL' || (status === 'LOW' ? s.attendance < 75 : s.attendance >= 85);
+        return matchesQuery && matchesSec && matchesStatus;
+      });
+
+      renderStudentsDirectory(filtered);
+    }
+
+    // Student Modals & Details
+    function viewStudentDetail(id) {
+      const s = students.find(item => item.id === id);
+      if (!s) return;
+
+      document.getElementById('detail-name').textContent = s.name;
+      document.getElementById('detail-avatar').textContent = s.name.split(' ').map(n=>n[0]).join('');
+      document.getElementById('detail-meta').textContent = `Roll No: #${s.roll} · Section ${s.section} · KSEEB Board`;
+      document.getElementById('detail-adm').textContent = `SJ-2022-${String(s.id).padStart(3, '0')}`;
+      document.getElementById('detail-parent').textContent = s.parent;
+      document.getElementById('detail-phone').textContent = `+91 ${s.phone}`;
+      
+      const attElem = document.getElementById('detail-attendance');
+      attElem.textContent = `${s.attendance}%`;
+      attElem.className = s.attendance < 75 ? 'text-red-600 font-bold' : 'text-emerald-600 font-bold';
+
+      const btn = document.getElementById('detail-whatsapp-btn');
+      btn.onclick = () => sendDirectWhatsApp(s.phone, s.name, s.section);
+
+      document.getElementById('modal-student-detail').classList.remove('hidden');
+    }
+
+    function closeStudentDetailModal() {
+      document.getElementById('modal-student-detail').classList.add('hidden');
+    }
+
+    function openAddStudentModal() {
+      document.getElementById('modal-add-student').classList.remove('hidden');
+    }
+
+    function closeAddStudentModal() {
+      document.getElementById('modal-add-student').classList.add('hidden');
+    }
+
+    function saveNewStudent(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-name').value;
+      const roll = parseInt(document.getElementById('new-roll').value);
+      const section = document.getElementById('new-section').value;
+      const parent = document.getElementById('new-parent').value;
+      const phone = document.getElementById('new-phone').value;
+
+      const newStudent = {
+        id: students.length + 1,
+        roll,
+        name,
+        section,
+        parent,
+        phone,
+        attendance: 100.0,
+        status: "PRESENT"
+      };
+
+      students.push(newStudent);
+      renderAttendanceRoster();
+      renderStudentsDirectory();
+      closeAddStudentModal();
+      alert(`Student ${name} successfully enrolled into ${section}!`);
+    }
+
+    function simulateExcelUpload(input) {
+      if (input.files && input.files[0]) {
+        alert(`File "${input.files[0].name}" successfully parsed! 42 student records verified and updated without duplication.`);
+        switchTab('students');
+      }
+    }
+
+    // Theme Toggle Handler
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = '☀️';
+    }
+  </script>
+</body>
+</html>
