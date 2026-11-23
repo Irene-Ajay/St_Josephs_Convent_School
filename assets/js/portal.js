@@ -177,14 +177,49 @@ async function loadAttendanceForDate(day) {
 // ---------------------------------------------------------------------
 // Auth
 // ---------------------------------------------------------------------
-function showLogin(message = '') {
+// Passwords are stored (bcrypt-hashed) and checked by Supabase Auth.
+// Registering creates the auth user; a database trigger then creates the
+// matching staff row (first account = approved ADMIN, everyone else waits
+// for an admin to approve them). See supabase/migrations/*_staff_registration.sql
+
+let signedInUser = null;   // Supabase auth user (even if not yet approved)
+
+const AUTH_PANELS = ['auth-tabs', 'login-form', 'register-form', 'register-done', 'login-not-staff'];
+
+function showAuthPanel(...visible) {
   $('login-overlay').classList.remove('hidden');
-  $('login-form').classList.remove('hidden');
-  $('login-not-staff').classList.add('hidden');
+  AUTH_PANELS.forEach(id => $(id).classList.toggle('hidden', !visible.includes(id)));
+}
+
+function showAuthMode(mode) {
+  const signin = mode !== 'register';
+  showAuthPanel('auth-tabs', signin ? 'login-form' : 'register-form');
+  const on = ['bg-[#D45129]', 'text-white'];
+  const off = ['text-[var(--text-muted)]'];
+  $('auth-tab-signin').classList.remove(...(signin ? off : on));
+  $('auth-tab-signin').classList.add(...(signin ? on : off));
+  $('auth-tab-register').classList.remove(...(signin ? on : off));
+  $('auth-tab-register').classList.add(...(signin ? off : on));
+  $('login-error').textContent = '';
+  $('register-error').textContent = '';
+  setTimeout(() => $(signin ? 'login-email' : 'register-name').focus?.(), 0);
+}
+
+function showLogin(message = '') {
+  showAuthMode('signin');
   $('login-error').textContent = message;
 }
 
 function hideLogin() { $('login-overlay').classList.add('hidden'); }
+
+function friendlyAuthError(error) {
+  const msg = (error && error.message) || String(error);
+  if (/invalid login credentials/i.test(msg)) return 'Incorrect email or password.';
+  if (/email not confirmed/i.test(msg)) return 'Please confirm your email first. Check your inbox for the link.';
+  if (/already registered|already exists/i.test(msg)) return 'An account with this email already exists. Please sign in instead.';
+  if (/rate limit|too many/i.test(msg)) return 'Too many attempts. Please wait a few minutes and try again.';
+  return msg;
+}
 
 async function handleLogin(event) {
   event.preventDefault();
@@ -196,8 +231,52 @@ async function handleLogin(event) {
     password: $('login-password').value,
   });
   btn.disabled = false;
-  if (error) $('login-error').textContent = error.message;
-  // On success, onAuthStateChange takes over.
+  if (error) {
+    $('login-error').textContent = friendlyAuthError(error);
+    $('login-password').value = '';
+  }
+  // On success, onAuthStateChange -> onSignedIn() takes over.
+}
+
+async function handleRegister(event) {
+  event.preventDefault();
+  const name = $('register-name').value.trim();
+  const email = $('register-email').value.trim();
+  const password = $('register-password').value;
+  const errBox = $('register-error');
+  errBox.textContent = '';
+
+  if (password.length < 8) { errBox.textContent = 'Password must be at least 8 characters.'; return; }
+  if (password !== $('register-confirm').value) { errBox.textContent = 'Passwords do not match.'; return; }
+
+  const btn = $('register-submit');
+  btn.disabled = true;
+  const { data, error } = await sb.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { full_name: name },                                   // only the name; role is set by the database
+      emailRedirectTo: window.location.origin + window.location.pathname,
+    },
+  });
+  btn.disabled = false;
+
+  if (error) { errBox.textContent = friendlyAuthError(error); return; }
+
+  // With email confirmation on, Supabase hides "already registered" by
+  // returning a user with no identities.
+  if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+    errBox.textContent = 'An account with this email already exists. Please sign in instead.';
+    return;
+  }
+
+  $('register-form').reset();
+  if (!data.session) {
+    // Email confirmation is required before the first sign-in.
+    $('register-done-email').textContent = email;
+    showAuthPanel('register-done');
+  }
+  // If a session came back, onAuthStateChange signs them straight in.
 }
 
 async function signOut() {
@@ -205,26 +284,110 @@ async function signOut() {
   await sb.auth.signOut();
 }
 
+function showNoAccess(user, staffRow) {
+  showAuthPanel('login-not-staff');
+  if (staffRow) {
+    $('login-not-staff-title').textContent = `Welcome, ${staffRow.full_name}. Your account is waiting for approval.`;
+    $('login-not-staff-text').textContent = `You are registered as ${user.email}. An administrator needs to approve your account before you can see school records. Ask them to open Staff Access in the portal.`;
+  } else {
+    $('login-not-staff-title').textContent = 'This account is not registered as school staff.';
+    $('login-not-staff-text').textContent = `Signed in as ${user.email}. Ask the administrator to give you access.`;
+  }
+}
+
 async function onSignedIn(user) {
   // supabase-js can fire SIGNED_IN again on tab refocus; don't wipe unsaved marks.
   if (me && me.id === user.id) return;
-  const { data, error } = await sb.from('staff').select('id, full_name, role').eq('id', user.id).maybeSingle();
+  signedInUser = user;
+
+  // Every user can read their own staff row (RLS), approved or not.
+  const { data, error } = await sb.from('staff')
+    .select('id, full_name, role, approved')
+    .eq('id', user.id).maybeSingle();
   if (error) { showError(error, 'Could not load your staff profile'); return; }
-  if (!data) {
-    $('login-overlay').classList.remove('hidden');
-    $('login-form').classList.add('hidden');
-    $('login-not-staff').classList.remove('hidden');
-    $('login-not-staff-email').textContent = user.email;
-    return;
-  }
+  if (!data || !data.approved) { showNoAccess(user, data); return; }
+
   me = data;
   hideLogin();
   try {
     await loadAll();
+    if (isAdmin()) await loadStaff();
   } catch (err) {
     showError(err, 'Could not load data from Supabase');
   }
   afterDataLoaded();
+}
+
+async function recheckApproval() {
+  if (signedInUser) await onSignedIn(signedInUser);
+}
+
+// ---------------------------------------------------------------------
+// Staff access (admins only)
+// ---------------------------------------------------------------------
+let staffList = [];
+
+function isAdmin() { return !!me && (me.role === 'ADMIN' || me.role === 'PRINCIPAL'); }
+
+async function loadStaff() {
+  const { data, error } = await sb.from('staff')
+    .select('id, full_name, email, role, approved, created_at')
+    .order('approved').order('created_at');
+  if (error) throw error;
+  staffList = data;
+}
+
+function renderStaffTable() {
+  const nav = $('nav-staff');
+  nav.classList.toggle('hidden', !isAdmin());
+  if (!isAdmin()) return;
+
+  const pending = staffList.filter(s => !s.approved).length;
+  const badge = $('badge-pending-staff');
+  badge.textContent = pending;
+  badge.classList.toggle('hidden', pending === 0);
+
+  const tbody = $('staff-table-body');
+  if (staffList.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-[var(--text-muted)]">No staff accounts yet.</td></tr>`;
+    return;
+  }
+  const roles = ['TEACHER', 'PRINCIPAL', 'ADMIN'];
+  tbody.innerHTML = staffList.map(s => {
+    const self = s.id === me.id;
+    const roleSelect = self
+      ? `<span class="font-semibold">${esc(s.role)}</span>`
+      : `<select onchange="updateStaff('${esc(s.id)}', { role: this.value })" class="px-2 py-1 rounded-lg border border-[var(--border-soft)] bg-[var(--bg-cream)] text-[var(--text-dark)]">
+           ${roles.map(r => `<option value="${r}" ${r === s.role ? 'selected' : ''}>${r}</option>`).join('')}
+         </select>`;
+    const status = s.approved
+      ? `<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-[11px]">Approved</span>`
+      : `<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[11px]">Pending</span>`;
+    const action = self
+      ? `<span class="text-[var(--text-muted)]">You</span>`
+      : s.approved
+        ? `<button onclick="updateStaff('${esc(s.id)}', { approved: false }, 'Revoke access for ${esc(s.full_name)}?')" class="px-3 py-1 rounded-lg border border-red-300 text-red-700 hover:bg-red-50 font-semibold">Revoke</button>`
+        : `<button onclick="updateStaff('${esc(s.id)}', { approved: true })" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold">Approve</button>`;
+    return `
+      <tr class="hover:bg-[var(--bg-cream)] transition-colors">
+        <td class="py-3 px-4 font-semibold">${esc(s.full_name)}</td>
+        <td class="py-3 px-4 text-[var(--text-muted)]">${esc(s.email || '')}</td>
+        <td class="py-3 px-4 text-[var(--text-muted)]">${esc(new Date(s.created_at).toLocaleDateString('en-IN'))}</td>
+        <td class="py-3 px-4">${roleSelect}</td>
+        <td class="py-3 px-4">${status}</td>
+        <td class="py-3 px-4 text-right">${action}</td>
+      </tr>`;
+  }).join('');
+}
+
+async function updateStaff(id, patch, confirmText) {
+  if (confirmText && !confirm(confirmText)) { renderStaffTable(); return; }
+  const { data, error } = await sb.from('staff').update(patch).eq('id', id).select('id');
+  if (error || !data || data.length === 0) {
+    showError(error || new Error('Not allowed'), 'Could not update staff member');
+  }
+  try { await loadStaff(); } catch (err) { console.error(err); }
+  renderStaffTable();
 }
 
 // ---------------------------------------------------------------------
@@ -238,6 +401,7 @@ function afterDataLoaded() {
   renderUser();
   populateSectionSelects();
   renderAll();
+  renderStaffTable();
 }
 
 function renderAll() {
@@ -842,6 +1006,9 @@ function switchTab(tabId) {
     nav.classList.remove('text-white/80');
   }
   if (tabId === 'reports') generateReport();
+  if (tabId === 'staff' && !DEMO && isAdmin()) {
+    loadStaff().then(renderStaffTable).catch(err => showError(err, 'Could not load staff'));
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -884,8 +1051,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       if (session?.user) {
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') onSignedIn(session.user);
+      } else if (me) {
+        // Signed out after using the portal: reload so no student data stays in memory/DOM.
+        window.location.reload();
       } else {
-        me = null;
+        signedInUser = null;
         showLogin();
       }
     }, 0);

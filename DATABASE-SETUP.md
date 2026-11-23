@@ -41,28 +41,43 @@ It creates:
 Row Level Security is on for every table. The anon key on its own can read
 **nothing**; a user must sign in **and** be listed in `staff`.
 
-## 3. Create the first staff login
+## 3. Sign in and register
 
-1. Dashboard → **Authentication → Users → Add user** (email + password,
-   tick "Auto confirm").
-2. Dashboard → **SQL Editor**, run (change the name/email):
+The login screen has **Sign in** and **Register** tabs. Accounts and
+passwords are stored by Supabase Auth (`auth.users`, passwords hashed with
+bcrypt) and checked on every sign-in; a wrong email or password is refused.
 
-   ```sql
-   insert into public.staff (id, full_name, role)
-   select id, 'Sr. Teresa', 'ADMIN'
-   from auth.users where email = 'teacher@example.com';
+- **The first person to register becomes the ADMIN** and is approved
+  automatically. Register yourself first.
+- **Everyone after that is a TEACHER and starts as "Pending"**. They can sign
+  in, but they see a "waiting for approval" screen and no school data until
+  an admin approves them.
+- Admins approve, revoke or change roles in the **Staff Access** tab, which
+  only admins can see.
 
-   -- optional: make her class teacher of 10A
-   update public.sections set class_teacher_id =
-     (select id from auth.users where email = 'teacher@example.com')
-   where code = '10A';
-   ```
+Roles: `ADMIN` / `PRINCIPAL` can manage sections and years, approve staff and
+delete records. `TEACHER` can add students, mark attendance and send
+WhatsApp messages.
 
-   Roles: `ADMIN`, `PRINCIPAL` (can manage sections/years, delete records),
-   `TEACHER` (can add students, mark attendance, send WhatsApp).
+### Email confirmation
 
-3. Optional: Dashboard → Authentication → Providers → Email → turn off
-   "Allow new users to sign up" so only staff you create can log in.
+By default Supabase emails a confirmation link to every new account, and the
+person must click it before their first sign-in. For local use:
+
+- Dashboard → **Authentication → URL Configuration** → set **Site URL** to
+  `http://localhost:8000`, so the link in the email opens the portal.
+- Supabase's built-in mailer sends only a few emails per hour. For a school
+  roll-out, add your own SMTP under Authentication → Emails, or turn off
+  **Confirm email** (Authentication → Providers → Email). Admin approval
+  still protects the data.
+
+To make someone a class teacher (SQL Editor):
+
+```sql
+update public.sections set class_teacher_id =
+  (select id from public.staff where email = 'teacher@example.com')
+where code = '10A';
+```
 
 ## 4. Run the site
 
