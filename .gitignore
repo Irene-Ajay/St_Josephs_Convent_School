@@ -6,6 +6,11 @@ school-system/data/settings.ini
 school-system/data/FIRST_LOGIN.txt
 school-system/data/backups/
 
+# Supabase keys — fill in locally, never commit
+.env
+.env.local
+config.js
+
 # Python
 __pycache__/
 *.py[cod]
