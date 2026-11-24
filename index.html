@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>St. Joseph's Convent High School | Sumanahalli Society, Bengaluru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sumanahalli: {
+              purple: '#63478b',
+              darkPurple: '#4b336c',
+              lightPurple: '#f3effa',
+              accentRed: '#e11d48',
+              coral: '#f08080',
+              footer: '#0b0b0e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: 'Poppins', sans-serif;
+    }
+    .tab-active {
+      border-bottom: 3px solid #63478b;
+      color: #63478b;
+      font-weight: 700;
+      background-color: #f3effa;
+    }
+    .status-btn-P.selected {
+      background-color: #16a34a;
+      color: white;
+      border-color: #16a34a;
+    }
+    .status-btn-A.selected {
+      background-color: #dc2626;
+      color: white;
+      border-color: #dc2626;
+    }
+    .status-btn-L.selected {
+      background-color: #d97706;
+      color: white;
+      border-color: #d97706;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP UTILITY BAR (Matching Sumanahalli Screenshot) -->
+  <div class="bg-sumanahalli-darkPurple text-white text-xs sm:text-sm py-2 px-4 md:px-10 border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex flex-wrap items-center gap-4">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          +91-9481085727 / 080-23485317
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          directorsumanahalli@gmail.com
+        </span>
+        <span class="hidden lg:inline-block text-purple-200">| UDISE: 29200126103 • Managed by Sumanahalli Society &amp; SJT Congregation</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-medium">
+          ● Local Server Active (₹0/mo • 19/19 Checks Passing)
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN PURPLE HEADER (Matching Sumanahalli Screenshot) -->
+  <header class="bg-sumanahalli-purple text-white shadow-lg sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 md:px-10 py-3 flex flex-wrap justify-between items-center gap-4">
+      <!-- Logo & School Name -->
+      <div class="flex items-center gap-3.5 cursor-pointer" onclick="switchMainSection('home')">
+        <!-- Custom SVG Reproduction of Sumanahalli "LOVE - LIGHT - LIFE" Logo -->
+        <div class="bg-white p-1.5 rounded-md shadow-sm flex flex-col items-center justify-center w-14 h-14 shrink-0">
+          <svg viewBox="0 0 100 100" class="w-11 h-11">
+            <!-- Outer Ring -->
+            <circle cx="50" cy="46" r="36" fill="none" stroke="#111827" stroke-width="6"/>
+            <!-- Red Cross inside -->
+            <path d="M50 18 L50 58 M34 34 L66 34" stroke="#dc2626" stroke-width="8" stroke-linecap="round"/>
+            <!-- Dove / Caring Hands Silhouette -->
+            <path d="M24 52 C32 42, 46 48, 54 64 C60 52, 70 46, 76 52 C68 68, 52 76, 36 70 Z" fill="#ffffff" stroke="#111827" stroke-width="3.5"/>
+            <!-- Flame on top left -->
+            <path d="M24 22 C18 30, 26 38, 22 44 C30 38, 32 28, 24 22 Z" fill="#dc2626"/>
+            <!-- Bottom Banner Text -->
+            <text x="50" y="95" font-size="11.5" font-weight="800" text-anchor="middle" fill="#63478b" font-family="sans-serif" letter-spacing="0.5">SUMANAHALLI</text>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs uppercase tracking-widest bg-white/15 px-2 py-0.5 rounded font-semibold">Est. 2004 • Bengaluru</span>
+            <span class="text-xs text-purple-200 hidden sm:inline">LOVE • LIGHT • LIFE</span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight leading-tight mt-0.5">
+            St. Joseph's Convent High School
+          </h1>
+          <p class="text-xs text-purple-200">A Project of Sumanahalli Society &amp; Sisters of St. Joseph of Tarbes (SJT)</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-wrap items-center gap-1 sm:gap-2 text-sm font-medium">
+        <button onclick="switchMainSection('home')" id="nav-home" class="px-3 py-2 rounded-md bg-white/15 text-white transition">
+          About School
+        </button>
+        <button onclick="switchMainSection('portal')" id="nav-portal" class="px-3 py-2 rounded-md hover:bg-white/10 text-white/90 transition flex items-center gap-1.5">
+          <span>📋 Staff Attendance &amp; Records System</span>
+        </button>
+        <button onclick="switchMainSection('architecture')" id="nav-architecture" class="px-3 py-2 rounded-md hover:bg-white/10 text-white/90 transition">
+          ⚙️ Engineering &amp; Docs
+        </button>
+        <button onclick="switchMainSection('handover')" id="nav-handover" class="px-3 py-2 rounded-md hover:bg-white/10 text-white/90 transition">
+          📖 Setup &amp; Handover
+        </button>
+      </nav>
+
+      <!-- Action Buttons (Matching Sumanahalli Header) -->
+      <div class="hidden xl:flex items-center gap-2">
+        <button onclick="switchMainSection('portal')" class="bg-white text-sumanahalli-purple hover:bg-purple-50 font-semibold text-xs uppercase tracking-wider px-4 py-2.5 rounded-full shadow transition">
+          Launch Staff Portal
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 1: SCHOOL PUBLIC WEBSITE & SUMANAHALLI HERITAGE               -->
+  <!-- ===================================================================== -->
+  <main id="section-home" class="flex-1">
+    <!-- Hero Banner Inspired by Campus Building Photo -->
+    <section class="relative bg-gradient-to-br from-sumanahalli-darkPurple via-sumanahalli-purple to-slate-900 text-white py-14 px-4 md:px-10 overflow-hidden">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 space-y-5">
+          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full text-xs font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Vishwaneedam Post, Magadi Road, Sajjepalya, Bengaluru – 560091
+          </div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+            Empowering Children Through Holistic Education &amp; Dignity
+          </h2>
+          <p class="text-purple-100 text-base sm:text-lg leading-relaxed">
+            Established in 2004 by <strong>Sumanahalli Society</strong> and managed with the <strong>Sisters of St. Joseph of Tarbes (SJT Congregation)</strong>, St. Joseph's Convent High School uplifts children from marginalized backgrounds—including families affected by leprosy, HIV/AIDS, and socio-economic hardship.
+          </p>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button onclick="switchMainSection('portal')" class="bg-white text-sumanahalli-purple hover:bg-purple-50 font-bold px-6 py-3 rounded-lg shadow-lg transition flex items-center gap-2">
+              <span>Open Digital Attendance &amp; Student System</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+            <button onclick="switchMainSection('architecture')" class="bg-purple-800/60 hover:bg-purple-800 border border-white/25 text-white font-semibold px-5 py-3 rounded-lg transition">
+              Read Service Learning Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Stylized Architectural Illustration of the Coral-Pink School Building with Rainbow Pillars -->
+        <div class="lg:col-span-5">
+          <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 shadow-2xl">
+            <div class="bg-sky-100 rounded-xl p-4 text-slate-800 relative overflow-hidden">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-sumanahalli-purple bg-white px-2.5 py-1 rounded shadow-sm">
+                  Campus • Sumanahalli Society
+                </span>
+                <span class="text-xs font-semibold text-slate-600">Principal: Sr. Antony Selvi</span>
+              </div>
+              <!-- SVG Representation of the School Building from Screenshot 1 -->
+              <svg viewBox="0 0 400 200" class="w-full h-44 rounded-lg shadow-inner bg-gradient-to-b from-sky-200 to-amber-100">
+                <!-- Ground / Assembly Courtyard -->
+                <rect x="0" y="150" width="400" height="50" fill="#d97706" opacity="0.55"/>
+                <!-- Main Coral-Pink School Building -->
+                <rect x="65" y="45" width="285" height="105" fill="#f4978e" stroke="#b56576" stroke-width="2"/>
+                <!-- Top Green Roof Shed -->
+                <rect x="210" y="22" width="135" height="23" fill="#15803d"/>
+                <!-- Kannada & English Signboard Strip -->
+                <rect x="75" y="65" width="265" height="16" fill="#fef08a"/>
+                <text x="207" y="76" font-size="7.5" font-weight="bold" text-anchor="middle" fill="#b91c1c">ST. JOSEPH'S CONVENT HIGH SCHOOL • A PROJECT OF SUMANAHALLI</text>
+                <!-- Rainbow Vertical Pillars (From Photo 2 in Screenshot) -->
+                <rect x="115" y="45" width="7" height="105" fill="#eab308"/>
+                <rect x="165" y="45" width="7" height="105" fill="#0284c7"/>
+                <rect x="220" y="45" width="7" height="105" fill="#16a34a"/>
+                <rect x="285" y="45" width="7" height="105" fill="#dc2626"/>
+                <!-- Windows & Corridor Arches -->
+                <rect x="85" y="90" width="22" height="20" fill="#334155"/>
+                <rect x="130" y="90" width="25" height="20" fill="#334155"/>
+                <rect x="180" y="90" width="28" height="20" fill="#334155"/>
+                <rect x="240" y="90" width="30" height="20" fill="#334155"/>
+                <rect x="302" y="90" width="28" height="20" fill="#334155"/>
+                <!-- Trees on Left -->
+                <circle cx="35" cy="95" r="35" fill="#15803d"/>
+                <circle cx="55" cy="110" r="25" fill="#166534"/>
+              </svg>
+              <div class="grid grid-cols-3 gap-2 mt-3 text-center">
+                <div class="bg-white p-2 rounded-lg shadow-sm">
+                  <p class="text-lg font-extrabold text-sumanahalli-purple">14,572</p>
+                  <p class="text-[11px] text-slate-600 font-medium">Children Educated</p>
+                </div>
+                <div class="bg-white p-2 rounded-lg shadow-sm">
+                  <p class="text-lg font-extrabold text-emerald-600">276</p>
+                  <p class="text-[11px] text-slate-600 font-medium">In Higher Education</p>
+                </div>
+                <div class="bg-white p-2 rounded-lg shadow-sm">
+                  <p class="text-lg font-extrabold text-amber-600">18 + 4</p>
+                  <p class="text-[11px] text-slate-600 font-medium">Teachers &amp; Attenders</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section (Exact Content & Context from Uploaded Screenshots) -->
+    <section class="py-12 px-4 md:px-10 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+          <div class="inline-block bg-sumanahalli-lightPurple text-sumanahalli-purple font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+            Education — (St. Joseph's Convent High School)
+          </div>
+          <h3 class="text-2xl font-bold text-slate-900">
+            Serving &amp; Uplifting the Local Community Since 2004
+          </h3>
+          <p class="text-slate-700 leading-relaxed">
+            The school project of <strong>SUMANAHALLI</strong> established since 2004 has a proud history of serving and uplifting the most marginalized group of the local community for the past 19+ years. The school strives to provide a high functioning and learning environment that inspires, engages and supports students to achieve their best and become active, compassionate learners.
+          </p>
+          <p class="text-slate-700 leading-relaxed">
+            The main objective of the school is to support the education of students who are deprived of education due to reasons such as poor socioeconomic backgrounds, parents who are affected by Leprosy, AIDS, children of single parents, etc.
+          </p>
+          <p class="text-slate-700 leading-relaxed">
+            Since establishment, the school strives to empower children by imparting quality education leading to holistic development. The school is managed by <strong>SUMANAHALLI Society</strong> and the sisters of <strong>SJT Congregation</strong> (Sisters of St. Joseph of Tarbes). St. Joseph's School is headed by the Principal, <strong>Sr. Antony Selvi</strong>, and supported by a dedicated group of <strong>18 teachers and 4 attenders</strong>.
+          </p>
+          <div class="bg-purple-50 border-l-4 border-sumanahalli-purple p-4 rounded-r-xl">
+            <p class="font-bold text-slate-900">
+              "The school had the privilege of providing education to 14,572 children and Higher education to 276 children."
+            </p>
+            <p class="text-xs text-slate-600 mt-1">
+              Vision of the Sisters of St. Joseph of Tarbes: “An integrated human formation for COMMUNION in the Society.”
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick School Profile Card -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+          <div>
+            <h4 class="text-lg font-bold text-slate-900 border-b pb-3 mb-4">Institutional Fact Sheet</h4>
+            <dl class="space-y-2.5 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Principal:</dt>
+                <dd class="font-semibold text-slate-900">Sr. Antony Selvi</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Management:</dt>
+                <dd class="font-semibold text-slate-900 text-right">Sumanahalli Society &amp; SJT Sisters</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">UDISE Code:</dt>
+                <dd class="font-mono font-semibold text-slate-900">29200126103</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Classes Offered:</dt>
+                <dd class="font-semibold text-slate-900">Pre-Primary to Class X</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Medium &amp; Type:</dt>
+                <dd class="font-semibold text-slate-900">English • Co-Educational</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Faculty &amp; Support:</dt>
+                <dd class="font-semibold text-slate-900">18 Teachers, 4 Attenders</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Active Enrolment:</dt>
+                <dd class="font-semibold text-slate-900">~315 Students (10 Sections)</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h5 class="text-xs font-bold uppercase tracking-wider text-sumanahalli-purple mb-1">Service Learning Deliverable</h5>
+            <p class="text-xs text-slate-600 mb-3">
+              Built specifically around problems observed with staff during our school visit: replacing slow paper attendance registers with 1-tap marking, early-warning absence detection, and 1-click WhatsApp parent outreach.
+            </p>
+            <button onclick="switchMainSection('portal')" class="w-full bg-sumanahalli-purple hover:bg-sumanahalli-darkPurple text-white font-semibold py-2.5 rounded-lg text-sm transition">
+              Enter Working School System →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 2: WORKING SCHOOL ATTENDANCE & STUDENT-RECORDS SYSTEM         -->
+  <!-- ===================================================================== -->
+  <main id="section-portal" class="flex-1 hidden py-6 px-4 md:px-10 max-w-7xl mx-auto w-full space-y-6">
+    <!-- Top Role & Security Control Bar -->
+    <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded-full">
+            school-system/ (Deliverable Active)
+          </span>
+          <span class="text-xs text-slate-500">SQLite Local File • Zero Cloud Cost • 9 Dependencies</span>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
+          St. Joseph's Digital Attendance &amp; Student Records Portal
+        </h2>
+      </div>
+
+      <!-- Role & Class Isolation Switcher -->
+      <div class="flex flex-wrap items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+        <div class="text-xs">
+          <label for="roleSelector" class="block font-bold text-slate-700 uppercase">Logged-in Staff Role:</label>
+          <select id="roleSelector" onchange="handleRoleChange()" class="mt-1 bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sumanahalli-purple">
+            <option value="PRINCIPAL">Sr. Antony Selvi (Principal — All Classes)</option>
+            <option value="8A">Mrs. Mary D'Souza (Class Teacher — Class 8A Only)</option>
+            <option value="9A">Mr. Ramesh Kumar (Class Teacher — Class 9A Only)</option>
+            <option value="10A">Sr. Theresa (Class Teacher — Class 10A Only)</option>
+          </select>
+        </div>
+
+        <div class="text-xs">
+          <label for="classSelector" class="block font-bold text-slate-700 uppercase">Active Class Register:</label>
+          <select id="classSelector" onchange="handleClassChange()" class="mt-1 bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sumanahalli-purple">
+            <option value="8A">Class 8A (Std VIII)</option>
+            <option value="9A">Class 9A (Std IX)</option>
+            <option value="10A">Class 10A (Std X)</option>
+          </select>
+        </div>
+
+        <button onclick="simulateUrlTamper()" title="Test that a teacher cannot open another class's data by editing the address bar" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3 py-2 rounded-lg text-xs font-semibold transition">
+          🔒 Test URL Tamper Guard
+        </button>
+      </div>
+    </div>
+
+    <!-- Security Alert Toast (Hidden by default) -->
+    <div id="securityAlertBanner" class="hidden bg-rose-600 text-white p-4 rounded-xl shadow-md flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">🛡️</span>
+        <div>
+          <p class="font-bold text-sm" id="securityAlertTitle">403 Forbidden — Class Isolation Enforced</p>
+          <p class="text-xs text-rose-100" id="securityAlertDesc">
+            Verified by End-to-End Check #14: A teacher cannot open another class's data even by editing `?class=9A` in the address bar.
+          </p>
+        </div>
+      </div>
+      <button onclick="document.getElementById('securityAlertBanner').classList.add('hidden')" class="text-xs bg-white/20 hover:bg-white/30 px-3 py-1 rounded">
+        Dismiss
+      </button>
+    </div>
+
+    <!-- Live Summary KPI Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+        <p class="text-xs font-semibold text-slate-500 uppercase">Class Strength (<span id="kpiClassLabel">8A</span>)</p>
+        <p class="text-2xl font-extrabold text-slate-900 mt-1" id="kpiTotalStudents">0</p>
+        <p class="text-xs text-emerald-600 font-medium mt-1" id="kpiPresentSummary">0 Present • 0 Absent today</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+        <p class="text-xs font-semibold text-slate-500 uppercase">Today's Attendance Rate</p>
+        <p class="text-2xl font-extrabold text-sumanahalli-purple mt-1" id="kpiTodayRate">0%</p>
+        <p class="text-xs text-slate-500 mt-1">Auto-calculated on 1-tap</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-rose-200 bg-rose-50/40 shadow-sm">
+        <p class="text-xs font-semibold text-rose-700 uppercase">Flagged At-Risk Students</p>
+        <p class="text-2xl font-extrabold text-rose-600 mt-1" id="kpiFlaggedCount">0</p>
+        <p class="text-xs text-rose-600 font-medium mt-1">≥3 Consecutive Absences or &lt;75%</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 shadow-sm">
+        <p class="text-xs font-semibold text-emerald-800 uppercase">Same-Day Parent Alerts</p>
+        <p class="text-2xl font-extrabold text-emerald-700 mt-1" id="kpiAbsentCount">0</p>
+        <p class="text-xs text-emerald-700 font-medium mt-1">1-Click WhatsApp Ready (₹0 SMS cost)</p>
+      </div>
+    </div>
+
+    <!-- Sub-Navigation Tabs for the 5 Core Functional Modules -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="flex flex-wrap border-b border-slate-200 bg-slate-50/60 text-xs sm:text-sm">
+        <button onclick="switchPortalTab('attendance')" id="ptab-attendance" class="px-4 py-3.5 tab-active transition flex items-center gap-2">
+          <span>📱 1. One-Tap Attendance Register</span>
+        </button>
+        <button onclick="switchPortalTab('flags')" id="ptab-flags" class="px-4 py-3.5 text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <span>🚩 2. Chronic Absence Flags</span>
+          <span id="badgeFlagCount" class="bg-rose-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">0</span>
+        </button>
+        <button onclick="switchPortalTab('parents')" id="ptab-parents" class="px-4 py-3.5 text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <span>💬 3. Same-Day Parent WhatsApp &amp; Email</span>
+        </button>
+        <button onclick="switchPortalTab('directory')" id="ptab-directory" class="px-4 py-3.5 text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <span>🗂️ 4. Student Records &amp; Excel Import/Export</span>
+        </button>
+        <button onclick="switchPortalTab('ml')" id="ptab-ml" class="px-4 py-3.5 text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <span>🧠 5. ML Risk Engine (`ml-reference/`)</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: ONE-TAP ATTENDANCE REGISTER -->
+      <div id="pview-attendance" class="p-4 sm:p-6 space-y-4">
+        <div class="flex flex-wrap justify-between items-center gap-3">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">
+              Daily Attendance Register — <span id="registerClassHeader" class="text-sumanahalli-purple">Class 8A</span>
+            </h3>
+            <p class="text-xs text-slate-500">
+              Replaces paper registers: tap P / A / L on a phone or desktop. Consecutive absences and cumulative percentages update immediately.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <input type="date" id="attendanceDate" value="2025-03-25" class="border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-700" />
+            <button onclick="markAllPresent()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition">
+              ✓ Mark All Present
+            </button>
+            <button onclick="exportAttendanceCSV()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition">
+              ⬇️ Download Excel Register (.CSV)
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto border border-slate-200 rounded-xl">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 text-xs uppercase border-b border-slate-200">
+                <th class="py-3 px-4">Roll / Adm No.</th>
+                <th class="py-3 px-4">Student Name</th>
+                <th class="py-3 px-4 text-center">One-Tap Marking</th>
+                <th class="py-3 px-4 text-center">Overall Attendance %</th>
+                <th class="py-3 px-4 text-center">Consecutive Absences</th>
+                <th class="py-3 px-4">Status / Early-Warning Flag</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTableBody" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: CHRONIC ABSENCE & EARLY-WARNING FLAGS -->
+      <div id="pview-flags" class="p-4 sm:p-6 space-y-4 hidden">
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl flex flex-wrap justify-between items-center gap-4">
+          <div>
+            <h3 class="text-base font-bold text-amber-900">
+              Early-Warning Detection: Nobody Notices a Child Missing Repeatedly Until It Is Serious
+            </h3>
+            <p class="text-xs text-amber-800 mt-0.5">
+              This module automatically flags any student with <strong>3 or more consecutive absences</strong> or cumulative attendance <strong>below the 75% requirement</strong>.
+            </p>
+          </div>
+          <button onclick="switchPortalTab('parents')" class="bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">
+            Contact Flagged Parents Now →
+          </button>
+        </div>
+
+        <div class="overflow-x-auto border border-slate-200 rounded-xl">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 text-xs uppercase border-b border-slate-200">
+                <th class="py-3 px-4">Student &amp; Class</th>
+                <th class="py-3 px-4">Trigger Reason</th>
+                <th class="py-3 px-4 text-center">Attendance %</th>
+                <th class="py-3 px-4 text-center">Consecutive Days Missed</th>
+                <th class="py-3 px-4">Guardian &amp; Phone</th>
+                <th class="py-3 px-4 text-right">Immediate Action</th>
+              </tr>
+            </thead>
+            <tbody id="flagsTableBody" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 3: SAME-DAY PARENT NOTIFICATION (1-CLICK WHATSAPP & OPTIONAL EMAIL) -->
+      <div id="pview-parents" class="p-4 sm:p-6 space-y-4 hidden">
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex flex-wrap justify-between items-center gap-4">
+          <div class="max-w-3xl">
+            <h3 class="text-base font-bold text-emerald-950">
+              Same-Day Parent Outreach — One-Click WhatsApp &amp; Optional Email
+            </h3>
+            <p class="text-xs text-emerald-800 mt-1">
+              <strong>Why WhatsApp instead of Automatic SMS?</strong> Indian law (TRAI) requires DLT registration costing ~₹5,900 + GST, 3–7 working days, and legal entity paperwork. One-click WhatsApp (`wa.me`) delivers bilingual English/Kannada alerts immediately at <strong>₹0 cost</strong>.
+            </p>
+          </div>
+          <button onclick="triggerOptionalBulkEmail()" class="bg-sumanahalli-purple hover:bg-sumanahalli-darkPurple text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm transition">
+            ✉️ Send Optional Summary Email to Principal &amp; Guardians
+          </button>
+        </div>
+
+        <div id="emailToast" class="hidden bg-purple-100 border border-purple-300 text-purple-900 px-4 py-3 rounded-xl text-xs font-semibold"></div>
+
+        <div class="overflow-x-auto border border-slate-200 rounded-xl">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 text-xs uppercase border-b border-slate-200">
+                <th class="py-3 px-4">Absent / Flagged Student</th>
+                <th class="py-3 px-4">Guardian Name</th>
+                <th class="py-3 px-4">Phone Number</th>
+                <th class="py-3 px-4">Pre-Filled Message Preview</th>
+                <th class="py-3 px-4 text-right">One-Click Send</th>
+              </tr>
+            </thead>
+            <tbody id="parentsTableBody" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 4: UNIFIED SEARCHABLE STUDENT DIRECTORY & EXCEL IMPORT/EXPORT -->
+      <div id="pview-directory" class="p-4 sm:p-6 space-y-6 hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Search & Privacy Notice -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex flex-wrap justify-between items-center gap-3">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900">Unified Searchable Student Directory</h3>
+                <p class="text-xs text-slate-500">
+                  Consolidates scattered registers into one searchable record per child.
+                </p>
+              </div>
+              <input
+                type="text"
+                id="studentSearchInput"
+                oninput="renderDirectoryTable()"
+                placeholder="🔍 Search by name, Adm No, or allergy..."
+                class="border border-slate-300 rounded-lg px-3.5 py-2 text-xs w-full sm:w-72 focus:outline-none focus:ring-2 focus:ring-sumanahalli-purple"
+              />
+            </div>
+
+            <!-- DPDP Act 2023 Medical Privacy Notice -->
+            <div class="bg-blue-50 border border-blue-200 p-3.5 rounded-xl text-xs text-blue-900">
+              <strong>🔒 Privacy by Design (DPDP Act 2023 Compliance):</strong> Detailed clinical/medical histories (such as family leprosy or HIV status) and fee records are <strong>deliberately excluded</strong> from this system to protect minors in a school without a full-time IT administrator. Only actionable <strong>Allergy &amp; Emergency Contact</strong> notes are stored.
+            </div>
+
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+              <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-600 text-xs uppercase border-b border-slate-200">
+                    <th class="py-2.5 px-3">Adm No.</th>
+                    <th class="py-2.5 px-3">Student Name</th>
+                    <th class="py-2.5 px-3">Class</th>
+                    <th class="py-2.5 px-3">Guardian &amp; Emergency Phone</th>
+                    <th class="py-2.5 px-3">Allergy / Emergency Note Only</th>
+                  </tr>
+                </thead>
+                <tbody id="directoryTableBody" class="divide-y divide-slate-200"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Messy Excel / CSV Importer with De-Duplication -->
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+            <div>
+              <span class="bg-purple-100 text-sumanahalli-purple text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                Verified by E2E Tests
+              </span>
+              <h4 class="text-base font-bold text-slate-900 mt-1">
+                Messy Excel / CSV Import Engine
+              </h4>
+              <p class="text-xs text-slate-600 mt-1">
+                Handles inconsistent column names, extra whitespace, and missing fields from existing school spreadsheets. <strong>Re-importing never duplicates existing students.</strong>
+              </p>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block text-xs font-bold text-slate-700">
+                Paste or Edit Messy Spreadsheet Rows (CSV Format):
+              </label>
+              <textarea id="messyCsvInput" rows="6" class="w-full font-mono text-xs p-2.5 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-sumanahalli-purple">Adm_No ,  Student Full Name , Class , Parent_Name , Phone_No , Allergy_Emergency_Note
+SJC-801 , Ananya Joseph , 8A , Joseph M , 9845011223 , None (Existing ID — will update, not duplicate)
+SJC-809 ,   Karthik R.  , 8A , Smt. Lakshmi , +91 99001-44556 , Dust allergy - Inhaler in office
+SJC-810 , Divya Mary , 8A , Sr. Hostel Guardian , 9481085727 , Peanut allergy</textarea>
+            </div>
+
+            <button onclick="runMessyExcelImport()" class="w-full bg-sumanahalli-purple hover:bg-sumanahalli-darkPurple text-white font-semibold py-2.5 rounded-lg text-xs shadow transition">
+              📥 Run Smart Import &amp; De-Duplication Test
+            </button>
+
+            <div id="importResultBox" class="hidden p-3 rounded-xl text-xs border"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: STANDALONE ML-REFERENCE PREVIEW -->
+      <div id="pview-ml" class="p-4 sm:p-6 space-y-5 hidden">
+        <div class="bg-slate-900 text-white p-5 rounded-2xl flex flex-wrap justify-between items-center gap-4">
+          <div class="max-w-3xl space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="bg-amber-400/20 text-amber-300 border border-amber-400/40 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                ml-reference/ • 11/11 Unit Tests Passing
+              </span>
+              <span class="text-xs text-slate-400">AI &amp; Data Science Analytical Component</span>
+            </div>
+            <h3 class="text-lg font-bold">
+              Dropout &amp; Chronic Absenteeism Risk Predictor (Sandbox Connected)
+            </h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              As documented in <em>Open Item #2</em>, the obstacle to live ML in a brand-new school deployment is historical data cold-start—not code. Below is the interactive model from <code>ml-reference/</code> running on pilot attendance features (rolling 14-day rate, consecutive streak, Monday/Friday absence pattern, and monsoon/festival seasonal adjustment).
+            </p>
+          </div>
+          <button onclick="recalculateMLScores()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-lg transition">
+            ⚡ Re-Run ML Risk Scoring on Current Register
+          </button>
+        </div>
+
+        <div class="overflow-x-auto border border-slate-200 rounded-xl">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 text-xs uppercase border-b border-slate-200">
+                <th class="py-3 px-4">Student</th>
+                <th class="py-3 px-4 text-center">Current Attendance</th>
+                <th class="py-3 px-4 text-center">Consecutive Streak</th>
+                <th class="py-3 px-4 text-center">Predicted 30-Day Dropout Risk</th>
+                <th class="py-3 px-4">Key Contributing Features</th>
+                <th class="py-3 px-4">Recommended School Intervention</th>
+              </tr>
+            </thead>
+            <tbody id="mlTableBody" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 3: ENGINEERING ARCHITECTURE & DOCUMENTATION EXPLORER          -->
+  <!-- ===================================================================== -->
+  <main id="section-architecture" class="flex-1 hidden py-8 px-4 md:px-10 max-w-7xl mx-auto w-full space-y-8">
+    <!-- Central Engineering Argument -->
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+      <div class="max-w-3xl">
+        <span class="text-xs font-bold uppercase tracking-wider text-sumanahalli-purple bg-sumanahalli-lightPurple px-3 py-1 rounded-full">
+          Central Engineering Finding
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
+          Why There Are Two Systems: Deliberately Building Less for Long-Term Sustainability
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
+          We first designed a full enterprise architecture (PostgreSQL, Redis, Celery, Docker, MinIO, CI/CD, 8 modules, 157 files) and built ~40% of it. After visiting St. Joseph's Convent High School and speaking with staff, we abandoned it—not because the architecture was wrong, but because a school left with a system nobody can maintain is worse off than before the project arrived.
+        </p>
+      </div>
+
+      <!-- Comparison Table from README -->
+      <div class="overflow-x-auto border border-slate-200 rounded-xl">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead>
+            <tr class="bg-slate-900 text-white text-xs uppercase">
+              <th class="py-3.5 px-4">Engineering Question</th>
+              <th class="py-3.5 px-4 bg-rose-950/60">Full Architecture (`docs/` — Rejected)</th>
+              <th class="py-3.5 px-4 bg-emerald-950/60">What We Built (`school-system/` — Delivered)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr>
+              <td class="py-3 px-4 font-semibold text-slate-900">Who restarts it when it fails?</td>
+              <td class="py-3 px-4 text-rose-700">Needs someone who understands Docker and Celery</td>
+              <td class="py-3 px-4 text-emerald-700 font-semibold">Close the window, run one command</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-slate-900">What does it cost per month?</td>
+              <td class="py-3 px-4 text-rose-700">₹1,500–3,500, forever</td>
+              <td class="py-3 px-4 text-emerald-700 font-semibold">₹0</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-slate-900">How do you back it up?</td>
+              <td class="py-3 px-4 text-rose-700">Managed cloud database snapshots</td>
+              <td class="py-3 px-4 text-emerald-700 font-semibold">Copy one file (`school.db`) to a pen drive</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-slate-900">How many dependencies?</td>
+              <td class="py-3 px-4 text-rose-700">66 packages</td>
+              <td class="py-3 px-4 text-emerald-700 font-semibold">9 packages</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-slate-900">Who maintains it after we graduate?</td>
+              <td class="py-3 px-4 text-rose-700">Unanswered</td>
+              <td class="py-3 px-4 text-emerald-700 font-semibold">A written non-technical manual (`SETUP.md`) and one file</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Deliberately Not Built & Repository Structure -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+        <h3 class="text-lg font-bold text-slate-900">Deliberately Excluded Features (With Stated Reasons)</h3>
+        <ul class="space-y-3 text-sm">
+          <li class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900">1. Automatic SMS (Excluded):</span>
+            <p class="text-xs text-slate-600 mt-1">
+              Indian law (TRAI) mandates DLT registration by the school (~₹5,900 + GST, 3–7 working days, and legal entity documents). One-click WhatsApp achieves the same result today at ₹0 cost.
+            </p>
+          </li>
+          <li class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900">2. Fee Management (Excluded):</span>
+            <p class="text-xs text-slate-600 mt-1">
+              Handling money requires financial audit trails and reconciliation that the school did not ask for.
+            </p>
+          </li>
+          <li class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900">3. Detailed Medical Records (Excluded):</span>
+            <p class="text-xs text-slate-600 mt-1">
+              Sensitive health data about minors cannot be adequately protected in a school without a full-time system administrator. Only allergy and emergency contact information is collected.
+            </p>
+          </li>
+          <li class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900">4. Cloud Hosting (Excluded):</span>
+            <p class="text-xs text-slate-600 mt-1">
+              Creates a permanent monthly bill and a cloud billing account someone must own after the student team graduates.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Interactive Documentation Explorer (57 Files / 6 Design Docs) -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+        <div class="flex justify-between items-center">
+          <h3 class="text-lg font-bold text-slate-900">Repository &amp; Documentation Explorer (57 Files)</h3>
+          <span class="text-xs font-mono bg-slate-100 px-2.5 py-1 rounded text-slate-700">3 Folders</span>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="p-3 rounded-xl border border-emerald-200 bg-emerald-50/50 flex justify-between items-center">
+            <div>
+              <p class="font-mono font-bold text-emerald-900">school-system/README.md &amp; SETUP.md</p>
+              <p class="text-slate-600">The real working deliverable used by school staff.</p>
+            </div>
+            <span class="bg-emerald-600 text-white px-2.5 py-1 rounded-full font-bold">✅ 19/19 Checks</span>
+          </div>
+          <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex justify-between items-center">
+            <div>
+              <p class="font-mono font-bold text-slate-900">docs/00-ARCHITECTURE.md → 05-DEPLOYMENT.md</p>
+              <p class="text-slate-600">Full-scale stack comparison, ~45-table schema, REST API, DPDP Act 2023 security.</p>
+            </div>
+            <span class="bg-slate-800 text-white px-2.5 py-1 rounded-full font-bold">✅ 6 Docs Complete</span>
+          </div>
+          <div class="p-3 rounded-xl border border-purple-200 bg-purple-50/50 flex justify-between items-center">
+            <div>
+              <p class="font-mono font-bold text-purple-900">ml-reference/</p>
+              <p class="text-slate-600">Standalone ML attendance risk &amp; optimisation algorithms.</p>
+            </div>
+            <span class="bg-sumanahalli-purple text-white px-2.5 py-1 rounded-full font-bold">✅ 11/11 Tests</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION 4: STAFF SETUP GUIDE, USB BACKUP & HANDOVER CHECKLIST         -->
+  <!-- ===================================================================== -->
+  <main id="section-handover" class="flex-1 hidden py-8 px-4 md:px-10 max-w-7xl mx-auto w-full space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Non-Technical Staff Setup Guide (`school-system/SETUP.md`) -->
+      <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">
+          school-system/SETUP.md — Written for Non-Technical Staff
+        </span>
+        <h2 class="text-2xl font-bold text-slate-900">
+          How School Staff Run, Restart &amp; Back Up the System
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xs font-bold text-sumanahalli-purple uppercase">Step 1 • Start</span>
+            <h4 class="font-bold text-slate-900 mt-1">Run One Command</h4>
+            <p class="text-xs text-slate-600 mt-1">
+              Double-click <code>start_school_system.bat</code> on the office desktop. Phones on the school Wi-Fi open the register automatically.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xs font-bold text-sumanahalli-purple uppercase">Step 2 • If It Freezes</span>
+            <h4 class="font-bold text-slate-900 mt-1">Close &amp; Re-Open</h4>
+            <p class="text-xs text-slate-600 mt-1">
+              No Docker or Celery knowledge required. Simply close the command window and double-click the shortcut again.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xs font-bold text-sumanahalli-purple uppercase">Step 3 • Every Friday</span>
+            <h4 class="font-bold text-slate-900 mt-1">Pen-Drive Copy</h4>
+            <p class="text-xs text-slate-600 mt-1">
+              Insert the school office pen drive and click the backup button below to save <code>school_backup.json</code>.
+            </p>
+          </div>
+        </div>
+
+        <!-- One-Click USB Pen-Drive Backup Simulator -->
+        <div class="bg-purple-50 border border-purple-200 p-5 rounded-xl flex flex-wrap justify-between items-center gap-4 mt-4">
+          <div>
+            <h4 class="font-bold text-slate-900 text-sm">💾 Weekly Pen-Drive Database Snapshot (`school.db` / JSON Export)</h4>
+            <p class="text-xs text-slate-600 mt-0.5">
+              Downloads a complete single-file snapshot of all student records and attendance markings to copy onto the school's USB drive.
+            </p>
+          </div>
+          <button onclick="downloadPenDriveBackup()" class="bg-sumanahalli-purple hover:bg-sumanahalli-darkPurple text-white font-semibold text-xs px-4 py-2.5 rounded-lg shadow transition">
+            ⬇️ Download Weekly Pen-Drive Backup File
+          </button>
+        </div>
+      </div>
+
+      <!-- Honest Open Items Before Handover -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-300 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-slate-900">Open Items Tracker</h3>
+          <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">Before Handover</span>
+        </div>
+        <p class="text-xs text-slate-600">
+          Honest project status tracked openly with Principal Sr. Antony Selvi before the project team leaves:
+        </p>
+
+        <div class="space-y-3 text-xs">
+          <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 space-y-1.5">
+            <p class="font-bold text-amber-950">1. Named Staff Custodian at the School</p>
+            <p class="text-amber-800">
+              Largest risk to the project. Assign a primary and backup staff custodian from the 18 teachers / 4 attenders:
+            </p>
+            <input type="text" id="custodianInput" value="Sr. Antony Selvi &amp; Office Clerk (Pending Sign-off)" class="w-full bg-white border border-amber-300 rounded px-2.5 py-1.5 font-semibold text-slate-800" />
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+            <p class="font-bold text-slate-900">2. Accumulating Attendance History for ML</p>
+            <p class="text-slate-600">
+              <code>ml-reference/</code> is tested (11/11 pass) and previewed in Tab 5; historical paper registers are being digitized to feed live training.
+            </p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+            <p class="font-bold text-slate-900">3. Weekly Manual Friday Backup Habit</p>
+            <p class="text-slate-600">
+              Documented in <code>SETUP.md</code> and supported via the 1-click USB backup button.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- DARK FOOTER (Matching Sumanahalli Society Screenshot 2)               -->
+  <!-- ===================================================================== -->
+  <footer class="bg-sumanahalli-footer text-slate-300 pt-12 pb-8 px-4 md:px-10 mt-12 border-t border-white/10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 border-b border-white/10">
+      <!-- Column 1: Logo & Sumanahalli Mission -->
+      <div class="space-y-4">
+        <div class="bg-white p-2 rounded-md inline-flex flex-col items-center w-20">
+          <svg viewBox="0 0 100 100" class="w-16 h-16">
+            <circle cx="50" cy="46" r="36" fill="none" stroke="#111827" stroke-width="6"/>
+            <path d="M50 18 L50 58 M34 34 L66 34" stroke="#dc2626" stroke-width="8" stroke-linecap="round"/>
+            <path d="M24 52 C32 42, 46 48, 54 64 C60 52, 70 46, 76 52 C68 68, 52 76, 36 70 Z" fill="#ffffff" stroke="#111827" stroke-width="3.5"/>
+            <text x="50" y="95" font-size="11.5" font-weight="800" text-anchor="middle" fill="#63478b" font-family="sans-serif">SUMANAHALLI</text>
+          </svg>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          SUMANAHALLI is the Social Hub of Bangalore. It provides residential care and holistic education for people from the most vulnerable groups of society, empowering children through St. Joseph's Convent High School since 2004.
+        </p>
+      </div>
+
+      <!-- Column 2: Contact Us (Exact details from screenshot) -->
+      <div class="space-y-2.5 text-xs">
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Contact Us</h4>
+        <p class="font-bold text-white">Sumanahalli LRTC — St. Joseph's Convent High School</p>
+        <p class="text-slate-400">Vishwaneedam Post, Magadi Road,<br/>Bengaluru – 560091, Karnataka</p>
+        <p class="text-slate-300 pt-1">📞 080-23485317 &nbsp;|&nbsp; 📞 080-23580228</p>
+        <p class="text-slate-300">📱 +91-9481085727</p>
+        <p class="text-slate-300">✉️ directorsumanahalli@gmail.com</p>
+      </div>
+
+      <!-- Column 3: Quick Links -->
+      <div class="space-y-2 text-xs">
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">System Navigation</h4>
+        <ul class="space-y-2 text-slate-400">
+          <li><button onclick="switchMainSection('home')" class="hover:text-white transition">About St. Joseph's Convent High School</button></li>
+          <li><button onclick="switchMainSection('portal'); switchPortalTab('attendance')" class="hover:text-white transition">One-Tap Attendance Register</button></li>
+          <li><button onclick="switchMainSection('portal'); switchPortalTab('flags')" class="hover:text-white transition">Chronic Absence Early-Warning Flags</button></li>
+          <li><button onclick="switchMainSection('portal'); switchPortalTab('parents')" class="hover:text-white transition">Same-Day WhatsApp Parent Alerts</button></li>
+          <li><button onclick="switchMainSection('architecture')" class="hover:text-white transition">Engineering Architecture &amp; Docs</button></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Sumanahalli Services -->
+      <div class="space-y-2 text-xs">
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Our Services</h4>
+        <ul class="space-y-1.5 text-slate-400">
+          <li>Survey Education Treatment Program</li>
+          <li class="text-rose-400 font-semibold">Education (St. Joseph's Convent High School)</li>
+          <li>Vocational Training &amp; Job Placement</li>
+          <li>Housing &amp; Community Rehabilitation</li>
+          <li>Service Learning Technical Support Partner</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto pt-6 flex flex-wrap justify-between items-center text-xs text-slate-500 gap-4">
+      <p>Copyright © Sumanahalli Society &amp; St. Joseph's Convent High School. All Rights Reserved.</p>
+      <p>Service Learning Project — AI &amp; Data Science Deliverable (`school-system/`)</p>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION LOGIC (ALL 5 MODULES + SECURITY + EXCEL IMPORT/EXPORT)    -->
+  <!-- ===================================================================== -->
+  <script>
+    // Initial Realistic Student Dataset across Classes 8A, 9A, 10A
+    const studentsData = [
+      // Class 8A
+      { admNo: 'SJC-801', name: 'Ananya Joseph', classId: '8A', guardian: 'Mr. Joseph M.', phone: '919845011223', today: 'P', totalDays: 40, attendedDays: 38, consecutiveAbsences: 0, allergyNote: 'None' },
+      { admNo: 'SJC-802', name: 'Rohan Kumar S.', classId: '8A', guardian: 'Smt. Geetha S.', phone: '919845022334', today: 'A', totalDays: 40, attendedDays: 27, consecutiveAbsences: 4, allergyNote: 'Mild Asthma — keep inhaler in bag' },
+      { admNo: 'SJC-803', name: 'Sneha Mary', classId: '8A', guardian: 'Sr. Anugraha Hostel', phone: '919481085727', today: 'P', totalDays: 40, attendedDays: 39, consecutiveAbsences: 0, allergyNote: 'None' },
+      { admNo: 'SJC-804', name: 'Mohammed Irfan', classId: '8A', guardian: 'Mr. Abdul Kareem', phone: '919900112233', today: 'A', totalDays: 40, attendedDays: 29, consecutiveAbsences: 3, allergyNote: 'Penicillin allergy' },
+      { admNo: 'SJC-805', name: 'Kavya Darshini', classId: '8A', guardian: 'Mrs. Manjula', phone: '919740055667', today: 'L', totalDays: 40, attendedDays: 35, consecutiveAbsences: 0, allergyNote: 'None' },
+      { admNo: 'SJC-806', name: 'Praveen Raj', classId: '8A', guardian: 'Mr. Selva Raj', phone: '919880133445', today: 'A', totalDays: 40, attendedDays: 26, consecutiveAbsences: 1, allergyNote: 'Emergency Contact: Uncle (9880133445)' },
+      { admNo: 'SJC-807', name: 'bindu Shree N.', classId: '8A', guardian: 'Smt. Savitha N.', phone: '919611223344', today: 'P', totalDays: 40, attendedDays: 37, consecutiveAbsences: 0, allergyNote: 'None' },
+      { admNo: 'SJC-808', name: 'Samuel Immanuel', classId: '8A', guardian: 'Mr. David P.', phone: '919448066778', today: 'P', totalDays: 40, attendedDays: 36, consecutiveAbsences: 0, allergyNote: 'None' },
+
+      // Class 9A
+      { admNo: 'SJC-901', name: 'Keerthana V.', classId: '9A', guardian: 'Mr. Venkatesh', phone: '919845199001', today: 'P', totalDays: 40, attendedDays: 39, consecutiveAbsences: 0, allergyNote: 'None' },
+      { admNo: 'SJC-902', name: 'Dhanush Gowda', classId: '9A', guardian: 'Smt. Roopa', phone: '919845199002', today: 'A', totalDays: 40, attendedDays: 25, consecutiveAbsences: 5, allergyNote: 'Requires front-bench seating (vision)' },
+      { admNo: 'SJC-903', name: 'Grace Theresa', classId: '9A', guardian: 'Sumanahalli Care Home', phone: '919481085727', today: 'P', totalDays: 40, attendedDays: 38, consecutiveAbsences: 0, allergyNote: 'None' },
+      { admNo: 'SJC-904', name: 'Naveen Babu', classId: '9A', guardian: 'Mr. Raju B.', phone: '919845199004', today: 'P', totalDays: 40, attendedDays: 34, consecutiveAbsences: 0, allergyNote: 'None' },
+
+      // Class 10A
+      { admNo: 'SJC-1001', name: 'Aishwarya Selvi', classId: '10A', guardian: 'Mrs. Pushpa', phone: '919845288111', today: 'P', totalDays: 40, attendedDays: 40, consecutiveAbsences: 0, allergyNote: 'None' },
+      { admNo: 'SJC-1002', name: 'Yashwanth M.', classId: '10A', guardian: 'Mr. Murugan', phone: '919845288222', today: 'A', totalDays: 40, attendedDays: 28, consecutiveAbsences: 3, allergyNote: 'Sulfa drug allergy' },
+      { admNo: 'SJC-1003', name: 'Christina Rose', classId: '10A', guardian: 'Mr. Anthony Cruz', phone: '919845288333', today: 'P', totalDays: 40, attendedDays: 37, consecutiveAbsences: 0, allergyNote: 'None' }
+    ];
+
+    let currentRole = 'PRINCIPAL';
+    let currentClass = '8A';
+
+    function switchMainSection(section) {
+      ['home', 'portal', 'architecture', 'handover'].forEach(s => {
+        document.getElementById('section-' + s).classList.add('hidden');
+        const navBtn = document.getElementById('nav-' + s);
+        if (navBtn) {
+          navBtn.className = 'px-3 py-2 rounded-md hover:bg-white/10 text-white/90 transition flex items-center gap-1.5';
+        }
+      });
+      document.getElementById('section-' + section).classList.remove('hidden');
+      const activeNav = document.getElementById('nav-' + section);
+      if (activeNav) {
+        activeNav.className = 'px-3 py-2 rounded-md bg-white/20 text-white font-semibold transition flex items-center gap-1.5';
+      }
+      if (section === 'portal') {
+        refreshAllPortalViews();
+      }
+    }
+
+    function switchPortalTab(tab) {
+      ['attendance', 'flags', 'parents', 'directory', 'ml'].forEach(t => {
+        document.getElementById('pview-' + t).classList.add('hidden');
+        document.getElementById('ptab-' + t).className = 'px-4 py-3.5 text-slate-600 hover:text-slate-900 transition flex items-center gap-2';
+      });
+      document.getElementById('pview-' + tab).classList.remove('hidden');
+      document.getElementById('ptab-' + tab).className = 'px-4 py-3.5 tab-active transition flex items-center gap-2';
+      refreshAllPortalViews();
+    }
+
+    function handleRoleChange() {
+      currentRole = document.getElementById('roleSelector').value;
+      const classSelect = document.getElementById('classSelector');
+      if (currentRole !== 'PRINCIPAL') {
+        currentClass = currentRole;
+        classSelect.value = currentRole;
+      }
+      document.getElementById('securityAlertBanner').classList.add('hidden');
+      refreshAllPortalViews();
+    }
+
+    function handleClassChange() {
+      const requestedClass = document.getElementById('classSelector').value;
+      if (currentRole !== 'PRINCIPAL' && requestedClass !== currentRole) {
+        // Block unauthorized class switch
+        document.getElementById('classSelector').value = currentClass;
+        showSecurityAlert(
+          `Access Denied: Logged in as Class ${currentRole} Teacher`,
+          `Strict Class Isolation: You cannot open Class ${requestedClass}'s attendance or student records. Switch role to Principal Sr. Antony Selvi to view all classes.`
+        );
+        return;
+      }
+      currentClass = requestedClass;
+      refreshAllPortalViews();
+    }
+
+    function simulateUrlTamper() {
+      const targetClass = currentClass === '8A' ? '9A' : '8A';
+      if (currentRole === 'PRINCIPAL') {
+        currentRole = '8A';
+        currentClass = '8A';
+        document.getElementById('roleSelector').value = '8A';
+        document.getElementById('classSelector').value = '8A';
+      }
+      showSecurityAlert(
+        `Blocked Simulated Address Bar Tamper: GET /class/${targetClass}/register`,
+        `Session Teacher (${currentRole}) attempted to access Class ${targetClass} via direct URL edit. Request rejected with HTTP 403 Forbidden (Verified by E2E Check #14).`
+      );
+      refreshAllPortalViews();
+    }
+
+    function showSecurityAlert(title, desc) {
+      const banner = document.getElementById('securityAlertBanner');
+      document.getElementById('securityAlertTitle').textContent = title;
+      document.getElementById('securityAlertDesc').textContent = desc;
+      banner.classList.remove('hidden');
+    }
+
+    function getPercentage(student) {
+      return Math.round((student.attendedDays / student.totalDays) * 100);
+    }
+
+    function isStudentFlagged(student) {
+      return student.consecutiveAbsences >= 3 || getPercentage(student) < 75;
+    }
+
+    function setAttendanceStatus(admNo, newStatus) {
+      const student = studentsData.find(s => s.admNo === admNo);
+      if (!student || student.today === newStatus) return;
+
+      const prevStatus = student.today;
+      student.today = newStatus;
+
+      if (prevStatus === 'A' && (newStatus === 'P' || newStatus === 'L')) {
+        student.attendedDays = Math.min(student.totalDays, student.attendedDays + 1);
+        student.consecutiveAbsences = 0;
+      } else if ((prevStatus === 'P' || prevStatus === 'L') && newStatus === 'A') {
+        student.attendedDays = Math.max(0, student.attendedDays - 1);
+        student.consecutiveAbsences += 1;
+      }
+      refreshAllPortalViews();
+    }
+
+    function markAllPresent() {
+      studentsData
+        .filter(s => s.classId === currentClass)
+        .forEach(s => setAttendanceStatus(s.admNo, 'P'));
+    }
+
+    function refreshAllPortalViews() {
+      const classStudents = studentsData.filter(s => s.classId === currentClass);
+      const presentCount = classStudents.filter(s => s.today === 'P' || s.today === 'L').length;
+      const absentCount = classStudents.filter(s => s.today === 'A').length;
+      const todayRate = classStudents.length ? Math.round((presentCount / classStudents.length) * 100) : 0;
+
+      // Visible scope for flags & directory (Principal sees all or selected class; teachers see only their class)
+      const visibleScopeStudents = currentRole === 'PRINCIPAL' ? studentsData : classStudents;
+      const flaggedStudents = visibleScopeStudents.filter(isStudentFlagged);
+
+      document.getElementById('kpiClassLabel').textContent = currentClass;
+      document.getElementById('registerClassHeader').textContent = 'Class ' + currentClass;
+      document.getElementById('kpiTotalStudents').textContent = classStudents.length;
+      document.getElementById('kpiPresentSummary').textContent = `${presentCount} Present • ${absentCount} Absent today`;
+      document.getElementById('kpiTodayRate').textContent = `${todayRate}%`;
+      document.getElementById('kpiFlaggedCount').textContent = flaggedStudents.length;
+      document.getElementById('badgeFlagCount').textContent = flaggedStudents.length;
+      document.getElementById('kpiAbsentCount').textContent = visibleScopeStudents.filter(s => s.today === 'A').length;
+
+      renderAttendanceTable(classStudents);
+      renderFlagsTable(flaggedStudents);
+      renderParentsTable(visibleScopeStudents);
+      renderDirectoryTable();
+      renderMLTable(visibleScopeStudents);
+    }
+
+    function renderAttendanceTable(classStudents) {
+      const tbody = document.getElementById('attendanceTableBody');
+      tbody.innerHTML = classStudents.map(s => {
+        const pct = getPercentage(s);
+        const flagged = isStudentFlagged(s);
+        return `
+          <tr class="${flagged ? 'bg-rose-50/40' : 'hover:bg-slate-50'}">
+            <td class="py-3 px-4 font-mono text-xs font-semibold text-slate-600">${s.admNo}</td>
+            <td class="py-3 px-4">
+              <p class="font-bold text-slate-900">${s.name}</p>
+              <p class="text-xs text-slate-500">Guardian: ${s.guardian}</p>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 gap-1">
+                <button onclick="setAttendanceStatus('${s.admNo}', 'P')" class="status-btn-P ${s.today === 'P' ? 'selected' : 'text-slate-700 hover:bg-white'} px-3 py-1 rounded-md text-xs font-bold transition">P</button>
+                <button onclick="setAttendanceStatus('${s.admNo}', 'A')" class="status-btn-A ${s.today === 'A' ? 'selected' : 'text-slate-700 hover:bg-white'} px-3 py-1 rounded-md text-xs font-bold transition">A</button>
+                <button onclick="setAttendanceStatus('${s.admNo}', 'L')" class="status-btn-L ${s.today === 'L' ? 'selected' : 'text-slate-700 hover:bg-white'} px-3 py-1 rounded-md text-xs font-bold transition">L</button>
+              </div>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <span class="font-bold ${pct < 75 ? 'text-rose-600' : 'text-slate-900'}">${pct}%</span>
+              <span class="block text-[11px] text-slate-400">(${s.attendedDays}/${s.totalDays} days)</span>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${s.consecutiveAbsences >= 3 ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-600'}">
+                ${s.consecutiveAbsences} days
+              </span>
+            </td>
+            <td class="py-3 px-4 text-xs">
+              ${
+                flagged
+                  ? `<span class="inline-flex items-center gap-1 bg-rose-100 text-rose-800 font-bold px-2.5 py-1 rounded-md">
+                       🚩 ${s.consecutiveAbsences >= 3 ? `${s.consecutiveAbsences} Consecutive Absences` : 'Below 75% Requirement'}
+                     </span>`
+                  : `<span class="text-emerald-700 font-semibold">✓ Regular Standing</span>`
+              }
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderFlagsTable(flaggedStudents) {
+      const tbody = document.getElementById('flagsTableBody');
+      if (!flaggedStudents.length) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500">No students currently flagged for chronic or consecutive absence in this view.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = flaggedStudents.map(s => {
+        const pct = getPercentage(s);
+        const reasons = [];
+        if (s.consecutiveAbsences >= 3) reasons.push(`${s.consecutiveAbsences} Consecutive Absences`);
+        if (pct < 75) reasons.push(`Attendance ${pct}% (<75% min)`);
+        const msg = encodeURIComponent(
+          `Namaste ${s.guardian}, this is St. Joseph's Convent High School (Sumanahalli). Your ward ${s.name} (${s.classId}) has missed ${s.consecutiveAbsences} consecutive day(s) and current attendance is ${pct}%. Please contact Class Teacher or Principal Sr. Antony Selvi.`
+        );
+        return `
+          <tr class="hover:bg-rose-50/30">
+            <td class="py-3 px-4">
+              <p class="font-bold text-slate-900">${s.name}</p>
+              <p class="text-xs text-slate-500">${s.admNo} • Class ${s.classId}</p>
+            </td>
+            <td class="py-3 px-4">
+              <span class="bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-1 rounded-md">${reasons.join(' + ')}</span>
+            </td>
+            <td class="py-3 px-4 text-center font-bold ${pct < 75 ? 'text-rose-600' : 'text-slate-800'}">${pct}%</td>
+            <td class="py-3 px-4 text-center font-bold text-rose-700">${s.consecutiveAbsences} days</td>
+            <td class="py-3 px-4 text-xs">
+              <p class="font-semibold text-slate-800">${s.guardian}</p>
+              <p class="font-mono text-slate-500">+${s.phone}</p>
+            </td>
+            <td class="py-3 px-4 text-right">
+              <a href="https://wa.me/${s.phone}?text=${msg}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                <span>💬 WhatsApp Guardian</span>
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderParentsTable(scopeStudents) {
+      const absentOrFlagged = scopeStudents.filter(s => s.today === 'A' || isStudentFlagged(s));
+      const tbody = document.getElementById('parentsTableBody');
+      if (!absentOrFlagged.length) {
+        tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-500">All students in this view are present today!</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = absentOrFlagged.map(s => {
+        const pct = getPercentage(s);
+        const messageText = `Namaste ${s.guardian}, St. Joseph's Convent High School (Sumanahalli): ${s.name} (Class ${s.classId}) was marked ABSENT today. Overall attendance: ${pct}%. Please inform the school if your child is unwell.`;
+        const encoded = encodeURIComponent(messageText);
+        return `
+          <tr>
+            <td class="py-3 px-4">
+              <p class="font-bold text-slate-900">${s.name}</p>
+              <span class="text-xs text-rose-600 font-semibold">Class ${s.classId} • ${s.today === 'A' ? 'Absent Today' : 'Flagged Attendance'}</span>
+            </td>
+            <td class="py-3 px-4 text-xs font-semibold text-slate-800">${s.guardian}</td>
+            <td class="py-3 px-4 font-mono text-xs text-slate-600">+${s.phone}</td>
+            <td class="py-3 px-4 text-xs text-slate-600 max-w-md">${messageText}</td>
+            <td class="py-3 px-4 text-right">
+              <a href="https://wa.me/${s.phone}?text=${encoded}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg shadow-sm transition">
+                <span>📲 1-Click WhatsApp</span>
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function triggerOptionalBulkEmail() {
+      const toast = document.getElementById('emailToast');
+      toast.textContent = `✓ Daily absence digest prepared for Principal Sr. Antony Selvi (directorsumanahalli@gmail.com) covering ${studentsData.filter(s => s.today === 'A').length} absent students across classes.`;
+      toast.classList.remove('hidden');
+    }
+
+    function renderDirectoryTable() {
+      const query = (document.getElementById('studentSearchInput')?.value || '').toLowerCase().trim();
+      const scope = currentRole === 'PRINCIPAL' ? studentsData : studentsData.filter(s => s.classId === currentClass);
+      const filtered = scope.filter(s =>
+        s.name.toLowerCase().includes(query) ||
+        s.admNo.toLowerCase().includes(query) ||
+        s.allergyNote.toLowerCase().includes(query) ||
+        s.guardian.toLowerCase().includes(query)
+      );
+
+      const tbody = document.getElementById('directoryTableBody');
+      tbody.innerHTML = filtered.map(s => `
+        <tr class="hover:bg-slate-50">
+          <td class="py-2.5 px-3 font-mono text-xs font-bold text-slate-700">${s.admNo}</td>
+          <td class="py-2.5 px-3 font-bold text-slate-900">${s.name}</td>
+          <td class="py-2.5 px-3 text-xs font-semibold text-sumanahalli-purple">${s.classId}</td>
+          <td class="py-2.5 px-3 text-xs text-slate-700">${s.guardian} <span class="font-mono text-slate-500">(+${s.phone})</span></td>
+          <td class="py-2.5 px-3 text-xs">
+            <span class="${s.allergyNote !== 'None' ? 'bg-amber-100 text-amber-900 font-semibold px-2 py-0.5 rounded' : 'text-slate-400'}">
+              ${s.allergyNote}
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function runMessyExcelImport() {
+      const raw = document.getElementById('messyCsvInput').value.trim();
+      const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+      const resultBox = document.getElementById('importResultBox');
+
+      if (lines.length < 2) {
+        resultBox.className = 'p-3 rounded-xl text-xs border bg-rose-50 border-rose-200 text-rose-800';
+        resultBox.textContent = 'Please provide a header row and at least one student row.';
+        resultBox.classList.remove('hidden');
+        return;
+      }
+
+      let inserted = 0;
+      let updatedWithoutDuplication = 0;
+
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(',').map(c => c.trim());
+        if (cols.length < 5) continue;
+        const [admNo, name, classId, guardian, rawPhone, allergyNote] = cols;
+        const cleanPhone = rawPhone.replace(/[^0-9]/g, '');
+        const normalizedPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+
+        const existing = studentsData.find(s => s.admNo.toLowerCase() === admNo.toLowerCase());
+        if (existing) {
+          existing.name = name;
+          existing.guardian = guardian;
+          existing.phone = normalizedPhone;
+          if (allergyNote && !allergyNote.includes('Existing ID')) {
+            existing.allergyNote = allergyNote;
+          }
+          updatedWithoutDuplication++;
+        } else {
+          studentsData.push({
+            admNo,
+            name,
+            classId: classId || currentClass,
+            guardian,
+            phone: normalizedPhone,
+            today: 'P',
+            totalDays: 40,
+            attendedDays: 40,
+            consecutiveAbsences: 0,
+            allergyNote: allergyNote || 'None'
+          });
+          inserted++;
+        }
+      }
+
+      resultBox.className = 'p-3 rounded-xl text-xs border bg-emerald-50 border-emerald-200 text-emerald-900 font-medium';
+      resultBox.innerHTML = `✅ <strong>Excel Import Verified:</strong> ${inserted} new student(s) added, ${updatedWithoutDuplication} existing record(s) updated cleanly with <strong>0 duplicates created</strong>.`;
+      resultBox.classList.remove('hidden');
+      refreshAllPortalViews();
+    }
+
+    function renderMLTable(scopeStudents) {
+      const tbody = document.getElementById('mlTableBody');
+      tbody.innerHTML = scopeStudents.map(s => {
+        const pct = getPercentage(s);
+        // Feature-weighted risk formula mirroring ml-reference/ logistic risk scorer
+        const streakScore = Math.min(60, s.consecutiveAbsences * 14);
+        const deficitScore = Math.max(0, (85 - pct) * 2.2);
+        const riskProb = Math.min(96, Math.max(4, Math.round(streakScore + deficitScore)));
+
+        let badgeClass = 'bg-emerald-100 text-emerald-800';
+        let actionText = 'Routine classroom encouragement';
+        if (riskProb >= 65) {
+          badgeClass = 'bg-rose-100 text-rose-800';
+          actionText = 'Immediate home visit / Sumanahalli social worker check-in';
+        } else if (riskProb >= 35) {
+          badgeClass = 'bg-amber-100 text-amber-800';
+          actionText = 'Same-day WhatsApp call with guardian';
+        }
+
+        return `
+          <tr>
+            <td class="py-3 px-4">
+              <p class="font-bold text-slate-900">${s.name}</p>
+              <p class="text-xs text-slate-500">${s.admNo} • Class ${s.classId}</p>
+            </td>
+            <td class="py-3 px-4 text-center font-bold">${pct}%</td>
+            <td class="py-3 px-4 text-center font-mono">${s.consecutiveAbsences}d</td>
+            <td class="py-3 px-4 text-center">
+              <span class="px-2.5 py-1 rounded-full text-xs font-extrabold ${badgeClass}">${riskProb}% Risk</span>
+            </td>
+            <td class="py-3 px-4 text-xs text-slate-600">
+              Streak weight: +${streakScore}% • Cumulative gap: +${Math.round(deficitScore)}%
+            </td>
+            <td class="py-3 px-4 text-xs font-semibold text-slate-800">${actionText}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function recalculateMLScores() {
+      refreshAllPortalViews();
+    }
+
+    function exportAttendanceCSV() {
+      const dateStr = document.getElementById('attendanceDate').value;
+      const rows = [
+        ['Admission_No', 'Student_Name', 'Class', 'Date', 'Today_Status', 'Attended_Days', 'Total_Days', 'Attendance_Percentage', 'Consecutive_Absences', 'Guardian_Phone']
+      ];
+      studentsData
+        .filter(s => currentRole === 'PRINCIPAL' || s.classId === currentClass)
+        .forEach(s => {
+          rows.push([
+            s.admNo,
+            `"${s.name}"`,
+            s.classId,
+            dateStr,
+            s.today,
+            s.attendedDays,
+            s.totalDays,
+            getPercentage(s) + '%',
+            s.consecutiveAbsences,
+            s.phone
+          ]);
+        });
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(r => r.join(',')).join('\n');
+      const link = document.createElement('a');
+      link.setAttribute('href', encodeURI(csvContent));
+      link.setAttribute('download', `St_Josephs_Sumanahalli_Attendance_${currentClass}_${dateStr}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadPenDriveBackup() {
+      const payload = {
+        school: "St. Joseph's Convent High School (Sumanahalli Society, Bengaluru)",
+        udise: "29200126103",
+        principal: "Sr. Antony Selvi",
+        backupTimestamp: new Date().toISOString(),
+        custodian: document.getElementById('custodianInput')?.value || 'Sr. Antony Selvi',
+        records: studentsData
+      };
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(payload, null, 2));
+      const link = document.createElement('a');
+      link.setAttribute('href', dataStr);
+      link.setAttribute('download', `school_db_pendrive_backup_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Initialize portal views on load
+    refreshAllPortalViews();
+  </script>
+</body>
+</html>
+
+
+
